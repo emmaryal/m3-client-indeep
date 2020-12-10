@@ -17,16 +17,16 @@ class AuthProvider extends React.Component {
      .catch((err) => this.setState({ isLoggedIn: false, user: null, isLoading: false }));
   }
 
-  signup = (username, password) => {
-    authService.signup( username, password )
+  signup = (email, name, password, profilePic) => {
+    authService.signup( email, name, password, profilePic )
       .then((user) => this.setState({ isLoggedIn: true, user }) )
       .catch((err) => {
         this.setState({ isLoggedIn: false, user: null });
       })
   }
 
-  login = (username, password) => {
-    authService.login( username, password )
+  login = (email, password) => {
+    authService.login( email, password )
       .then((user) => this.setState({ isLoggedIn: true, user }))
       .catch((err) => {
         this.setState({ isLoggedIn: false, user: null });
@@ -47,7 +47,7 @@ class AuthProvider extends React.Component {
     if (isLoading) return <p>Loading</p>;
 
     return(
-      <Provider value={{ isLoggedIn, isLoading, user, signup, login, logout }}  >
+      <Provider value={{ isLoggedIn, isLoading, user, signup, login, logout} }  >
         {this.props.children}
       </Provider>
     )

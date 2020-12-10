@@ -3,7 +3,7 @@ import axios from "axios";
 
 // THIS IS AN EXAMPLE THAT YOU CAN USE 
 // TO CREATE A SERVICE FOR YOUR AXIOS CALLS
-class ExampleService {
+class RecordsService {
   constructor() {
     // this.api  is a reusable base of the request containing the base url (baseURL) 
     // of the API and the options ( `withCredentials: true` )
@@ -14,25 +14,25 @@ class ExampleService {
   }
 
   getAll = () => {
-    const pr = this.api.get('/example')
+    const pr = this.api.get('/records')
 
     return pr;
   }
 
   getOne = (id) => {
-    const pr = this.api.get(`/example/${id}`)
+    const pr = this.api.get(`/records/${id}`)
 
     return pr;
   }
 
   create = (data) => {
-    const pr = this.api.post(`/example/${id}`, data )
+    const pr = this.api.post(`/records/${id}`, data )
 
     return pr;
   }
 
   deleteOne = (id) => {
-    const pr = this.api.delete(`/example/${id}` )
+    const pr = this.api.delete(`/records/${id}` )
 
     return pr;
   }
