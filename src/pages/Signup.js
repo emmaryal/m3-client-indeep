@@ -1,4 +1,4 @@
-import { EmailTwoTone } from "@material-ui/icons";
+//import { EmailTwoTone } from "@material-ui/icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from './../context/auth-context';
