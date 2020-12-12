@@ -1,6 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  
 }
 
 .App {
@@ -10,7 +11,8 @@ html, body {
 nav.navbar { 
   display: flex;
   padding: 0px 20px;
-  background: #686de0; 
+  background: white; 
+  border-bottom: black solid 5px;
 }
 
 button.navbar-button {
@@ -19,8 +21,43 @@ button.navbar-button {
   margin: 15px 10px;
   border-radius: 3px;
 }
+.rightnav{
+display: flex;
+align-items: center;
+flex-direction: row;  
+justify-content: flex-end;
+}
 
 #home-btn {
-  color: white;
+  color: black;
   text-decoration: none;
+}
+
+.indeepTitle {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 50px;
+}
+
+.indeepText {
+  font-family: 'Courier New', Courier, monospace;
+ 
+}
+
+.mb2 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.formContainer {
+  background-color: aqua;
+  padding:20px;
+}
+
+.record {
+  border-radius: 10px;
+  border-width: solid 20px;
+  border-color: cadetblue;
+  background-color: chartreuse;
+  padding: 20px;
+  margin: 15px;
 }

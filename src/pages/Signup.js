@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from './../context/auth-context';
 import axios from "axios"
+import { Form } from "react-bootstrap";
 
 class Signup extends Component {
   state = { email: "",name: "", password: "", profilePic: "" };
@@ -44,22 +45,22 @@ class Signup extends Component {
       <div>
         <h1>Sign Up</h1>
 
-        <form onSubmit={this.handleFormSubmit}>
-
-          <label>Username:</label>
-          <input type="text" name="email" value={email} onChange={this.handleChange} />
+        <Form onSubmit={this.handleFormSubmit}>
+        <Form.Group controlId="exampleForm.ControlInput1">
+          <label>Email:</label>
+          <Form.Control type="text" name="email" value={email} onChange={this.handleChange} id="exampleInputEmail1" class="form-control" aria-describedby="emailHelp" />
           
           <label>Name:</label>
-          <input type="text" name="name" value={name} onChange={this.handleChange} />
+          <Form.Control type="text" name="name" value={name} onChange={this.handleChange} id="exampleInputName1" class="form-control" aria-describedby="nameHelp" />
 
           <label>Password:</label>
-          <input type="password" name="password" value={password} onChange={this.handleChange} />
+          <Form.Control type="password" name="password" value={password} onChange={this.handleChange} id="exampleInputPassword1" class="form-control" aria-describedby="passwordHelp" />
           <label>Profile Image</label>
-          <input
+          <Form.Control
             name="profilePic"
             type="file"
             onChange={this.handleFileUpload}
-          ></input>
+          />
           <span>
             <img
               style={{ width: "100px" }}
@@ -67,8 +68,9 @@ class Signup extends Component {
               alt=""
             ></img>
           </span>
-          <input type="submit" value="Signup" />
-        </form>
+          </Form.Group>
+          <input variant = "secondary" type="submit" value="Signup" />
+        </Form>
         
         <p>Already have account?</p>
         <Link to={"/login"}> Login</Link>

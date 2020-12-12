@@ -5,7 +5,10 @@ import recordService from "./../lib/records-service";
 // is this how we connect me?? /auth/me.....
 import authService from "./../lib/auth-service";
 import { ControlPointDuplicate } from "@material-ui/icons";
-
+import ReactBootstrap from "react-bootstrap"
+import Container from "react-bootstrap/Container"
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
 
 class RecordDetails extends Component {
   state = {
@@ -134,19 +137,22 @@ privRouter.post("/createtip", isLoggedIn, (req, res, next) => {
 
   render() {
     return (
-      <div>
-      
-        <h2>title : {this.state.title}</h2>
+      <Container>
+      <Row>
+        <Col lg><h2>{this.state.title}</h2>
         {/*(this.state.image === "")?<img style={{ width: "200px" }} src = "./../images/recordPlaceholderImage.jpeg"/>  : <img style={{ width: "200px" }}src = {this.state.image}/>*/}
-        <img src={this.state.defaultImg} />
-        <h4>artist : {this.state.artist}</h4>
+        <h4>{this.state.artist}</h4>
         <p>label: {this.state.label}</p>
         <p>format: {this.state.format}</p>
         <p>label: {this.state.label}</p>
         <p>media condition: {this.state.mediaCondition}</p>
         <p>sleeve condition: {this.state.sleeveCondition}</p>
-        <p>weight: {this.state.weight}</p>
+        <p>weight: {this.state.weight}g</p>
         <p>catalogue no.: {this.state.catno}</p>
+        </Col>
+        <Col>
+        <img src="./../images/recordPlaceholderImage.jpeg" />
+
         <p>price: {this.state.price}€</p>
         {/*<p>favorited by: {this.state.favoritedBy[0].name }</p>*/}
         <button onClick={this.addFavourite}> heartemoji</button>
@@ -155,7 +161,9 @@ privRouter.post("/createtip", isLoggedIn, (req, res, next) => {
         >
           <button>Buy</button>
         </Link>
-      </div>
+        </Col>
+        </Row>
+      </Container>
     );
   }
 }

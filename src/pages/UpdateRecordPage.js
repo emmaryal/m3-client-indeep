@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 import recordService from "./../lib/records-service";
+import ReactBootstrap from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container"
 
 class UpdateRecordPage extends Component {
   state = {
@@ -13,55 +18,58 @@ class UpdateRecordPage extends Component {
     sleeveCondition: "",
     weight: "",
     catno: "",
+    comments: "",
     image: "",
-    price: 0
+    price: 0,
   };
 
-////////
+  ////////
 
-componentDidMount() {
-  this.getSingleRecord();
-}
+  componentDidMount() {
+    this.getSingleRecord();
+  }
 
-getSingleRecord = () => {
-  const { id } = this.props.match.params;
-  console.log("id:", id);
-  recordService
-    .getOne(id)
-    .then((data) => {
-      console.log(data);
- 
-      const {
-        listingId,
-        title,
-        artist,
-        format,
-        image,
-        label,
-        mediaCondition,
-        sleeveCondition,
-        weight,
-        catno,
-        price
-      } = data;
-      this.setState({
-        listingId,
-        title,
-        artist,
-        format,
-        image,
-        label,
-        mediaCondition,
-        sleeveCondition,
-        weight,
-        catno,
-        price
-      });
-    })
+  getSingleRecord = () => {
+    const { id } = this.props.match.params;
+    console.log("id:", id);
+    recordService
+      .getOne(id)
+      .then((data) => {
+        console.log(data);
 
-    .catch((err) => console.log(err));
-};
+        const {
+          listingId,
+          title,
+          artist,
+          format,
+          image,
+          label,
+          mediaCondition,
+          sleeveCondition,
+          weight,
+          catno,
+          comments,
+          price,
+        } = data;
+        this.setState({
+          listingId,
+          title,
+          artist,
+          format,
+          image,
+          label,
+          mediaCondition,
+          sleeveCondition,
+          weight,
+          catno,
+          image,
+          comments,
+          price,
+        });
+      })
 
+      .catch((err) => console.log(err));
+  };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
@@ -75,7 +83,8 @@ getSingleRecord = () => {
       weight,
       catno,
       image,
-      price
+      comments,
+      price,
     } = this.state;
     const { id } = this.props.match.params;
 
@@ -90,25 +99,25 @@ getSingleRecord = () => {
         weight,
         catno,
         image,
-        price
+        comments,
+        price,
       })
       .then(() => {
         this.getSingleRecord();
-       
+        this.props.history.push("/");
       })
+      
       .catch((err) => console.log(err));
   };
 
   deleteRecord = () => {
-   
     const { id } = this.props.match.params;
 
     axios
       .delete(`http://localhost:5000/api/records/${id}`)
-      .then(() => this.props.history.push("/records")) // causes Router URL change
+      .then(() => this.props.history.push("/")) // causes Router URL change
       .catch((err) => console.log(err));
   };
-
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -116,79 +125,108 @@ getSingleRecord = () => {
   };
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-          />
-          
+      <Container className = "formContainer">
+        <Form onSubmit={this.handleFormSubmit}>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlTitle">
+              <Form.Label>Title:</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-          <label>Artist:</label>
-          <input
-            type="text"
-            name="artist"
-            value={this.state.artist}
+            <Form.Group as={Col} controlId="exampleForm.ControlLabel">
+              <Form.Label>Artist:</Form.Label>
+              <Form.Control
+                type="text"
+                name="artist"
+                value={this.state.artist}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlmediaCond">
+              <Form.Label>Media Condition:</Form.Label>
+              <Form.Control
+                type="text"
+                name="mediaCondition"
+                value={this.state.mediaCondition}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
+            <Form.Group as={Col} controlId="exampleForm.ControlsleeveCond">
+              <Form.Label>Sleeve Condition:</Form.Label>
+              <Form.Control
+                type="text"
+                name="sleeveCondition"
+                value={this.state.sleeveCondition}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="exampleForm.ControlFormat">
+              <Form.Label>Format:</Form.Label>
+              <Form.Control
+                type="text"
+                name="format"
+                value={this.state.format}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} controlId="exampleForm.ControlWeight">
+              <Form.Label>Weight (grammes):</Form.Label>
+              <Form.Control
+                type="text"
+                name="weight"
+                value={this.state.weight}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-            onChange={this.handleChange}
-          />
+            <Form.Group as={Col} controlId="exampleForm.ControlCatNo">
+              <Form.Label>Catalogue Number:</Form.Label>
+              <Form.Control
+                type="text"
+                name="catno"
+                value={this.state.catno}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md={8} controlId="exampleForm.ControlComments">
+              <Form.Label>Comments:</Form.Label>
+              <Form.Control
+                type="textarea"
+                name="comments"
+                value={this.state.comments}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md={4} controlId="exampleForm.ControlPrice">
+              <Form.Label>Price (€):</Form.Label>
+              <Form.Control
+                id="price-field"
+                type="text"
+                name="price"
+                value={this.state.price}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+          </Form.Row>
 
-          <label>Format:</label>
-          <input
-            type="text"
-            name="format"
-            value={this.state.format}
-            onChange={this.handleChange}
-          />
-
-          <label>Media Condition:</label>
-          <input
-            type="text"
-            name="mediaCondition"
-            value={this.state.mediaCondition}
-            onChange={this.handleChange}
-          />
-
-          <label>Sleeve Condition:</label>
-          <input
-            type="text"
-            name="sleeveCondition"
-            value={this.state.sleeveCondition}
-            onChange={this.handleChange}
-          />
-
-          <label>Weight:</label>
-          <input
-            type="text"
-            name="weight"
-            value={this.state.weight}
-            onChange={this.handleChange}
-          />
-
-          <label>Catalogue Number:</label>
-          <input
-            type="text"
-            name="catno"
-            value={this.state.catno}
-            onChange={this.handleChange}
-          />
-
-<label>Price:</label>
-          <input
-            type="number"
-            name="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
-
-          <input type="submit" value="Update Record" />
-        </form>
-        <button onClick={this.deleteRecord}>Delete Record</button>
-      </div>
+          <input variant="secondary" type="submit" value="Update Record" />
+        </Form>
+        <Button variant="secondary" onClick={this.deleteRecord}>
+          Delete Record
+        </Button>
+      </Container>
     );
   }
 }

@@ -1,10 +1,11 @@
 import React from "react";
 import RecordListPage from "./RecordListPage";
 
+
 function Home() {
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1 className = "indeepTitle">Indeep Records</h1>
       {/* get records list  */}
       <RecordListPage />
     </div>
