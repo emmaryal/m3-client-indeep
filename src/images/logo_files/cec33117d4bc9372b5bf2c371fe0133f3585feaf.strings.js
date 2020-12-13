@@ -1,0 +1,4 @@
+window["cmsg"] = window["cmsg"] || {};
+window["cmsg"]["strings"] = window["cmsg"]["strings"] || {};
+window["cmsg"]["strings"]["en-GB"] = window["cmsg"]["strings"]["en-GB"] || [];
+window["cmsg"]["strings"]["en-GB"].push({"h5S1zw":"Use template","R6iRpg":"Edit","RHKCfg":"Edit or use template","/lE2mQ":"Grid view","rnsyAg":"Standard view","Sf4/yg":"Grid view","QJYZQw":"Copy","ZMvuWg":"Copied!","6ikrhA":"Copy a link to this design","D88teg":"Copy a link to this presentation","LYInOg":"Share","KtqMng":"Copy View Link","hrWYVQ":"Click to play audio","9Xt6Qw":"Tap to play audio","5MgONw":"Go to page {0}","Sn4nMA":"Close grid view","9jHqsQ":"Untitled Design","btMc3Q":"Mute","JbRXMg":"Unmute"});

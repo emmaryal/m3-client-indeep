@@ -13,6 +13,7 @@ class Navbar extends Component {
         {this.props.isLoggedIn ? (
           <Link to={"/private"} id="home-btn">
             <h4>Home</h4>
+            <img src = "./../images/logo.PNG" />
           </Link>
         ) : (
           <Link to={"/"} id="home-btn">
