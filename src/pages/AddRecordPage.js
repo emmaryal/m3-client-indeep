@@ -83,8 +83,8 @@ class AddRecordPage extends Component {
 
   render() {
     return (
-      <Container className = "formContainer">
-      <Form onSubmit={this.handleFormSubmit}>
+      <Container className = "card">
+      <Form className= "forms-input" onSubmit={this.handleFormSubmit}>
         <Form.Row>
           <Form.Group as={Col} controlId="exampleForm.ControlTitle">
             <Form.Label>Title:</Form.Label>

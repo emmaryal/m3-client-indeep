@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
 class Navbar extends Component {
-  state = { profilePlaceholder: "./../images/profilePlaceholder.jpg" };
+  state = {
+    profilePlaceholder: "https://image.flaticon.com/icons/png/512/64/64572.png",
+  };
 
   render() {
     // const { user, logout, isLoggedin } = this.props;
@@ -12,29 +14,35 @@ class Navbar extends Component {
       <nav className="navbar">
         {this.props.isLoggedIn ? (
           <Link to={"/private"} id="home-btn">
-            <h4>Home</h4>
-            <img src = "./../images/logo.PNG" />
+            <img
+              className="rotate"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU"
+            />
           </Link>
         ) : (
           <Link to={"/"} id="home-btn">
-            <h4>Home</h4>
+            <img className="rotate" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU" />
           </Link>
         )}
+        <h1 className="indeepTitle">Indeep Records</h1>
 
+
+
+        
         <div className="rightnav">
           {this.props.isLoggedIn ? (
             <>
-              <p>logged in as: {this.props.user && this.props.user.email}</p>
+              {/* <p>logged in as: {this.props.user && this.props.user.email}</p> */}
               <p>
                 {this.props.user.profilePic ? (
-                  <img
+                  <img style={{margin: "20px"}}
                     src={this.props.user.profilePic}
                     alt="profile pic"
                     width="50"
                     height="60"
                   />
                 ) : (
-                  <img
+                  <img style={{margin: "20px"}}
                     src={this.state.profilePlaceholder}
                     alt="profile pic"
                     width="50"
@@ -48,11 +56,11 @@ class Navbar extends Component {
           ) : (
             <>
               <Link to="/login">
-                <button className="navbar-button">Login</button>{" "}
+                <button className="navbar-button">Login</button>{/* {" "} */}
               </Link>
               <br />
               <Link to="/signup">
-                <button className="navbar-button">Sign Up</button>{" "}
+                <button className="navbar-button">Sign Up</button>{/* {" "} */}
               </Link>
             </>
           )}

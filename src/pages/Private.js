@@ -43,7 +43,6 @@ class Private extends Component {
  </Link>)
  :  
  <div>
- <h1 class = "indeepTitle" >Indeep Records</h1>
  <h4>Welcome {this.props.user && this.props.user.email}</h4>
 <p> here we will have shopping cart stuff and links to faves</p>
  </div>

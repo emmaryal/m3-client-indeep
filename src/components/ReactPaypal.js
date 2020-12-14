@@ -17,7 +17,6 @@ export default function ReactPayPal(props) {
                 description: "Your description",
                 currency_code: "EUR",
                 
-                  //value: {props.toPay}
                 },
               
             ],
@@ -50,7 +49,7 @@ export default function ReactPayPal(props) {
   return (
     <div>
     
-      <h4>Total Amount in EUR. : {props.toPay} </h4>
+      <h6>Total Amount in EUR. : {props.toPay} </h6>
       <div ref={paypalRef} />
     </div>
   );

@@ -4,7 +4,7 @@ import axios from "axios";
 import Search from "../components/Search";
 import PrivateRoute from "../components/PrivateRoute";
 //import Charts from "./../components/charts"
-import "./../App.css"
+import "./../App.css";
 //import RecordDetails from "./../components/RecordDetails"
 import { withAuth } from "./../context/auth-context";
 import Button from "react-bootstrap/Button";
@@ -13,36 +13,44 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
 
+import ChartsComponent from "../components/ChartsComponent";
+
 class RecordListPage extends Component {
   state = {
     listOfRecords: [],
-    sortedList: [],
+    newReleases: [],
     randomRecord: {},
-    currentUser:null,
+    currentUser: null,
   };
   getAllRecords = () => {
     axios.get(`http://localhost:5000/api/records`).then((apiResponse) => {
       this.setState({ listOfRecords: apiResponse.data });
     });
   };
+
+  getNewReleases= () => {
+    const newReleases = this.state.listOfRecords.slice(100,110);
+    this.setState({newReleases: newReleases})
+  }
+
+
+
   componentDidMount() {
     this.getAllRecords();
     this.getCurrentUser();
-    
-    
-    
-    //  fetch the data from API after the initial render, and save it in the state
+    this.getNewReleases();
   }
   getCurrentUser = () => {
-    authService.me()
-    .then((data)=>{
-      const {email} = data;
-      console.log("data from promise:", data)
-      this.setState({currentUser: email  });
-      console.log("this.state:", this.state)
-    })
-    .catch((err) => console.log(err));
-};
+    authService
+      .me()
+      .then((data) => {
+        const { email } = data;
+        console.log("data from promise:", data);
+        this.setState({ currentUser: email });
+        console.log("this.state:", this.state);
+      })
+      .catch((err) => console.log(err));
+  };
 
   filterRecords = (input) => {
     const finder = this.state.listOfRecords.filter(
@@ -59,75 +67,132 @@ class RecordListPage extends Component {
     this.setState({ listOfRecords: finder });
   };
 
-handleRandom = () => {
-    const randomIndex = Math.floor(this.state.listOfRecords.length * Math.random());
+  handleRandom = () => {
+    const randomIndex = Math.floor(
+      this.state.listOfRecords.length * Math.random()
+    );
     const randomRecord = this.state.listOfRecords[randomIndex];
-    this.setState({listOfRecords : randomRecord });
-    console.log(randomIndex)
-    console.log(randomRecord)
-    this.filterRecords(randomRecord.title)
-    
+    this.setState({ listOfRecords: randomRecord });
+    console.log(randomIndex);
+    console.log(randomRecord);
+    this.filterRecords(randomRecord.title);
+
     return;
-  }
+  };
 
   handleSortByTitle = () => {
-    const sortedTitle = this.state.listOfRecords.sort((x, y) => {
-      return x.title.toLowerCase - y.title.toLowerCase;
+    const listOfRecordsCopy = [...this.state.listOfRecords];
+    listOfRecordsCopy.sort((a, b) => {
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+
+      if (titleA < titleB) {
+        // sort strings in ascending order
+        return -1;
+      }
+      if (titleA > titleB) {
+        return 1;
+      }
+      return 0; // if strings are the same
     });
-    this.setState([...sortedTitle] );
-    console.log(this.state.listOfRecords)
-    console.log("sorted by title",sortedTitle)
+
+    this.setState({ listOfRecords: listOfRecordsCopy });
   };
 
   handleSortByArtist = () => {
-    const sortedArtist = this.state.listOfRecords.sort((x, y) => {
-      return x.artist.toLowerCase - y.artist.toLowerCase;
-    });
-    console.log(sortedArtist);
-    this.setState({ listOfRecords: sortedArtist });
+    const listOfRecordsCopy = [...this.state.listOfRecords];
+    listOfRecordsCopy.sort((a, b) => {
+      const artistA = a.artist.toLowerCase();
+      const artistB = b.artist.toLowerCase();
 
-    return;
+      if (artistA < artistB) {
+        // sort strings in ascending order
+        return -1;
+      }
+      if (artistA > artistB) {
+        return 1;
+      }
+      return 0; // if strings are the same
+    });
+
+    this.setState({ listOfRecords: listOfRecordsCopy });
   };
   handleSortByLabel = () => {
-    const sortedLabel = this.state.listOfRecords.sort((x, y) => {
-      return x.label.toLowerCase - y.label.toLowerCase;
-    });
-    this.setState({ listOfRecords: sortedLabel });
-  };
+    const listOfRecordsCopy = [...this.state.listOfRecords];
+    listOfRecordsCopy.sort((a, b) => {
+      const labelA = a.label.toLowerCase();
+      const labelB = b.label.toLowerCase();
 
-  handleSortByAscPrice = () => {
-    const sortedAscPrice = this.state.listOfRecords.sort((x, y) => {
-      return x.price - y.price;
-    });
-
-    this.setState([...sortedAscPrice]);
-
-    return;
-  };
-  handleSortByDesPrice = () => {
-    const sortedDesPrice = this.state.listOfRecords.sort((x, y) => {
-      return y.price - x.price;
+      if (labelA < labelB) {
+        // sort strings in ascending order
+        return -1;
+      }
+      if (labelA > labelB) {
+        return 1;
+      }
+      return 0; // if strings are the same
     });
 
-    this.setState([...sortedDesPrice]);
-
-    return;
+    this.setState({ listOfRecords: listOfRecordsCopy });
   };
+
+  handleSortByAscPrice= () => {
+    const listOfRecordsCopy = [...this.state.listOfRecords];
+    listOfRecordsCopy.sort((a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+
+      if (priceA < priceB) {
+        // sort strings in ascending order
+        return -1;
+      }
+      if (priceA > priceB) {
+        return 1;
+      }
+      return 0; // if strings are the same
+    });
+
+    this.setState({ listOfRecords: listOfRecordsCopy });
+  };
+  
+  
+  
+  
+  
+  
+  handleSortByDesPrice= () => {
+    const listOfRecordsCopy = [...this.state.listOfRecords];
+    listOfRecordsCopy.sort((a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+
+      if (priceA < priceB) {
+        // sort strings in ascending order
+        return 1;
+      }
+      if (priceA > priceB) {
+        return -1;
+      }
+      return 0; // if strings are the same
+    });
+
+    this.setState({ listOfRecords: listOfRecordsCopy });
+  };
+  
 
   render() {
-    // deconstruct value from the `state`
     const { listOfRecords } = this.state; //  <--  ADD
 
     return (
       <div>
-        
         <Search filterRecords={this.filterRecords} />
 
         <Button
           className="mb-2"
           variant="outline secondary"
           onClick={this.getAllRecords}
-        >Show All
+        >
+          Show All
         </Button>
 
         <Button
@@ -172,39 +237,54 @@ handleRandom = () => {
         >
           Sort By Price (descending)
         </Button>
-<Row><Col sm={8}>
-        <div className="record-list">
-          {listOfRecords.map((record) => (
-            <div key={record._id} className="record">
-              <Link to={`/records/${record._id}`}>
-                <h5 className="indeepText">Record Title : {record.title}</h5>
-              </Link>
-              <p>Artist : {record.artist} </p>
-              <p>Price: {record.price}€</p>
-              {record.favoritedBy ? (
-                <p>Popularity: {record.favoritedBy.length}</p>
-              ) : (
-                <p>popularity: 0</p>
-              )}
- 
-  {(this.state.currentUser === "admin")?(
-              <Link to={`/records/edit/${record._id}`}>
-                <p>Update or Delete this record</p>
-              </Link>):null }
+        <Row>
+          <Col sm={10}>
+            <div>
+              {listOfRecords.map((record) => (
+                <div key={record._id} className="card">
+                  <Row>
+                    <Col sm={8}>
+                      <Link to={`/records/${record._id}`}>
+                        <h5 className="indeepText">
+                          Record Title : {record.title}
+                        </h5>
+                      </Link>
+                      <p>Artist : {record.artist} </p>
+                      <p>Price: {record.price}€</p>
+                    </Col>
+                    <Col sm={4}>
+                      <img
+                        style={{ width: "100px", padding: "10px" }}
+                        src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
+                      />
+                      <img
+                        style={{ width: "100px", padding: "10px" }}
+                        src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
+                      />
+                      {record.favoritedBy ? (
+                        <p>Popularity: {record.favoritedBy.length}</p>
+                      ) : (
+                        <p>popularity: 0</p>
+                      )}
+
+                      {this.state.currentUser === "admin" ? (
+                        <Link to={`/records/edit/${record._id}`}>
+                          <p>Update or Delete this record</p>
+                        </Link>
+                      ) : null}
+                    </Col>{" "}
+                  </Row>
+                </div>
+              ))}
             </div>
-          ))}
-
-
-        </div>
-        </Col>
-        <Col sm={4}>
-        <h3>charts</h3>
-do a mapping here of most popular
-{/* <Charts /> */}
-        </Col>
+          </Col>
+          <Col sm={2}>
+            <h3>new releases</h3>
+            
+            <ChartsComponent newReleases={this.state.newReleases} />
+          </Col>
         </Row>
       </div>
-      
     );
   }
 }

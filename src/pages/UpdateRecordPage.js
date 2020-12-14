@@ -23,13 +23,11 @@ class UpdateRecordPage extends Component {
     price: 0,
   };
 
-  ////////
-
-  componentDidMount() {
+componentDidMount() {
     this.getSingleRecord();
   }
 
-  getSingleRecord = () => {
+ getSingleRecord = () => {
     const { id } = this.props.match.params;
     console.log("id:", id);
     recordService
@@ -125,8 +123,8 @@ class UpdateRecordPage extends Component {
   };
   render() {
     return (
-      <Container className = "formContainer">
-        <Form onSubmit={this.handleFormSubmit}>
+      <Container className = "card">
+        <Form className="forms-input" onSubmit={this.handleFormSubmit}>
           <Form.Row>
             <Form.Group as={Col} controlId="exampleForm.ControlTitle">
               <Form.Label>Title:</Form.Label>
@@ -220,12 +218,13 @@ class UpdateRecordPage extends Component {
               />
             </Form.Group>
           </Form.Row>
-
-          <input variant="secondary" type="submit" value="Update Record" />
-        </Form>
+{/*           <Button variant="secondary" onClick={this.handleSubmit}>Update Record</Button>
+ */}          <input variant="secondary" type="submit" value="Update Record" />
+        <br />
         <Button variant="secondary" onClick={this.deleteRecord}>
           Delete Record
         </Button>
+        </Form>
       </Container>
     );
   }

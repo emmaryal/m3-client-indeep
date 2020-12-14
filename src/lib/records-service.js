@@ -14,9 +14,9 @@ class RecordService {
 
   getAll = () => {
     const pr = this.api.get("/records");
-
     return pr;
   };
+
 getOneUser = (id) => {
   const pr = this.api.get(`/users/${id}`).then((apiResponse) =>{
     return apiResponse.data;
@@ -24,18 +24,15 @@ getOneUser = (id) => {
   return pr;
 };
 
-
   getOne = (id) => {
     const pr = this.api.get(`/records/${id}`).then((apiResponse) => {
       return apiResponse.data;
-     
     });
     return pr;
   };
 
   create = (data) => {
     const pr = this.api.post(`/records`, data);
-
     return pr;
   };
 
@@ -56,7 +53,6 @@ return pr;
 
   deleteOne = (id) => {
     const pr = this.api.delete(`/records/${id}`);
-
     return pr;
   };
 }

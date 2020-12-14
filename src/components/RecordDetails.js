@@ -12,7 +12,7 @@ import Row from "react-bootstrap/Row";
 //import { PayPalButton } from "react-paypal-button-v2";
 //import PayPalButton from "./PayPalButton";
 //import ReactPayPal from "./ReactPaypal";
-import ReactPayPal from "./ReactPaypal"
+import ReactPayPal from "./ReactPaypal";
 /* const CLIENT = {
   sandbox: "xxxXXX",
   production: "xxxXXX",
@@ -20,6 +20,7 @@ import ReactPayPal from "./ReactPaypal"
 const ENV = process.env.NODE_ENV === "production" ? "production" : "sandbox"; */
 class RecordDetails extends Component {
   state = {
+    id: "",
     recordId: "",
     listingId: "",
     title: " ",
@@ -31,6 +32,7 @@ class RecordDetails extends Component {
     sleeveCondition: "",
     weight: "",
     catno: "",
+    comments:"",
     price: 0,
     defaultImg: "./../images/recordPlaceholderImage.jpeg",
     favoritedBy: [],
@@ -72,13 +74,14 @@ class RecordDetails extends Component {
 
   getSingleRecord = () => {
     const { id } = this.props.match.params;
-    console.log("id:", id);
+    console.log("record id:", id);
     recordService
       .getOne(id)
       .then((data) => {
-        console.log(data);
+        console.log("data from getsinglerecord",data);
         //const theRecord = {data}
         const {
+          id,
           listingId,
           title,
           artist,
@@ -89,11 +92,13 @@ class RecordDetails extends Component {
           sleeveCondition,
           weight,
           catno,
+          comments,
           price,
           favoritedBy,
         } = data;
 
         this.setState({
+          id,
           listingId,
           title,
           artist,
@@ -104,6 +109,7 @@ class RecordDetails extends Component {
           sleeveCondition,
           weight,
           catno,
+          comments,
           price,
           favoritedBy,
         });
@@ -112,81 +118,85 @@ class RecordDetails extends Component {
       .catch((err) => console.log(err));
   };
 
-  /*
-privRouter.post("/createtip", isLoggedIn, (req, res, next) => {
-  // Destructure the values coming from the POST form
-  const { title, description, text } = req.body;
-  const userId = req.session.currentUser._id;
-  console.log("session id to add to createdby field:", userId);
-  Tips.create({ title, description, text, userId: userId })
-    .then((tip) => {
-      const pr = User.findByIdAndUpdate(
-        userId,
-        { $push: { createdTips: tip._id } },
-        { new: true }
-      );
-      return pr;
-    })
-    .then((updatedUser) => {
-      res.redirect(`/private/myprofile/`);
-    })
-    .catch((error) => console.log(error));
- */
+
+
   addFavourite = () => {
     this.state.isFavourite
-      ? this.setState({ isFavourite: false })
+      ? (this.setState({ isFavourite: false}))
+     
       : this.setState({ isFavourite: true });
     const userId = this.state.currentUser;
-    const recordId = this.state.recordId;
+    const { id } = this.props.match.params;
+    const recordId = id;
+    console.log("record id:", id)
     recordService
       .updateFave(userId, recordId)
       .then()
       .catch((error) => console.log(error));
   };
-setCheckout= () =>{}
+
+  setPopularity = (id) => {
+    //get
+  }
+
+
+  setCheckout = () => {};
   render() {
     /* const onSuccess = (payment) => console.log("Successful payment!", payment);
     const onError = (error) =>
       console.log("Erroneous payment OR failed to load script!", error);
     const onCancel = (data) => console.log("Cancelled payment!", data); */
-   
+
     return (
-      <Container>
+      <Container className="card">
         <Row>
-          <Col lg>
-            <h2>{this.state.title}</h2>
-            {/*(this.state.image === "")?<img style={{ width: "200px" }} src = "./../images/recordPlaceholderImage.jpeg"/>  : <img style={{ width: "200px" }}src = {this.state.image}/>*/}
+          <Col className="details-labels" lg={6}>
+            <h3>{this.state.title}</h3>
             <h4>{this.state.artist}</h4>
-            <p>label: {this.state.label}</p>
+            <p className="details-labels">label: {this.state.label}</p>
             <p>format: {this.state.format}</p>
             <p>label: {this.state.label}</p>
             <p>media condition: {this.state.mediaCondition}</p>
             <p>sleeve condition: {this.state.sleeveCondition}</p>
             <p>weight: {this.state.weight}g</p>
             <p>catalogue no.: {this.state.catno}</p>
+            <p>comments: {this.state.comments}</p>
+            <div>price: {this.state.price}€</div>
           </Col>
-          <Col>
-            <img src="./../images/recordPlaceholderImage.jpeg" />
+          <Col md={3}>
+          <img style={{ width: "200px" }} src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"/>
+          <img style={{ width: "200px" }} src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"/>
+          <br /> 
 
-            <p>price: {this.state.price}€</p>
-            {/*<p>favorited by: {this.state.favoritedBy[0].name }</p>*/}
-            <button onClick={this.addFavourite}> heartemoji</button>
-          </Col>
-        </Row>
-        {(this.state.checkout === true) 
-          ? <div className="payment-div">
-          <ReactPayPal toPay={this.state.price}/>
-          </div> 
-
-          :<div>
-            <h1>React-PayPal</h1>
-            <button onClick={() => {this.setCheckout(true)}} className="checkout-button">Checkout</button>
-          </div>
-        }
+           
+            {(this.state.isFavourite)?
+            <button onClick={this.addFavourite}>Remove from favourites</button>
+           
+            :
+            <button onClick={this.addFavourite}>Add to favourites</button>
             
-          
+            }
+          </Col>
+        <Col sm={3}>
+        
+        {this.state.checkout === true ? (
+          <div className="payment-div">
+            <ReactPayPal toPay={this.state.price} />
+          </div>
+        ) : (
+          <div>
+            <h1>React-PayPal</h1>
+            <button
+              onClick={() => {
+                this.setCheckout(true);
+              }}
+              className="checkout-button"
+            >
+              Checkout
+            </button>
+          </div>
+        )}
 
-          
         {/* <PayPalButton
           client={CLIENT}
           env={ENV}
@@ -197,6 +207,8 @@ setCheckout= () =>{}
           onError={onError}
           onCancel={onCancel}
         /> */}
+        </Col>
+        </Row>
       </Container>
     );
   }
