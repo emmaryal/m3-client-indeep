@@ -121,10 +121,11 @@ class RecordDetails extends Component {
 
 
   addFavourite = () => {
-    this.state.isFavourite
+    /* this.state.isFavourite
       ? (this.setState({ isFavourite: false}))
      
-      : this.setState({ isFavourite: true });
+      : this.setState({ isFavourite: true }); */
+      this.setState({isFavourite: !this.state.isFavourite})
     const userId = this.state.currentUser;
     const { id } = this.props.match.params;
     const recordId = id;
@@ -171,10 +172,8 @@ class RecordDetails extends Component {
            
             {(this.state.isFavourite)?
             <button onClick={this.addFavourite}>Remove from favourites</button>
-           
             :
             <button onClick={this.addFavourite}>Add to favourites</button>
-            
             }
           </Col>
         <Col sm={3}>

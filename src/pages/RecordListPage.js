@@ -28,12 +28,11 @@ class RecordListPage extends Component {
     });
   };
 
-  getNewReleases= () => {
-    const newReleases = this.state.listOfRecords.slice(100,110);
-    this.setState({newReleases: newReleases})
-  }
-
-
+  getNewReleases = () => {
+    const newReleases = [...this.state.listOfRecords];
+    this.setState({ newReleases: newReleases });
+    console.log("newreleases:", this.state.newReleases);
+  };
 
   componentDidMount() {
     this.getAllRecords();
@@ -136,7 +135,7 @@ class RecordListPage extends Component {
     this.setState({ listOfRecords: listOfRecordsCopy });
   };
 
-  handleSortByAscPrice= () => {
+  handleSortByAscPrice = () => {
     const listOfRecordsCopy = [...this.state.listOfRecords];
     listOfRecordsCopy.sort((a, b) => {
       const priceA = a.price;
@@ -154,13 +153,8 @@ class RecordListPage extends Component {
 
     this.setState({ listOfRecords: listOfRecordsCopy });
   };
-  
-  
-  
-  
-  
-  
-  handleSortByDesPrice= () => {
+
+  handleSortByDesPrice = () => {
     const listOfRecordsCopy = [...this.state.listOfRecords];
     listOfRecordsCopy.sort((a, b) => {
       const priceA = a.price;
@@ -178,7 +172,6 @@ class RecordListPage extends Component {
 
     this.setState({ listOfRecords: listOfRecordsCopy });
   };
-  
 
   render() {
     const { listOfRecords } = this.state; //  <--  ADD
@@ -280,8 +273,8 @@ class RecordListPage extends Component {
           </Col>
           <Col sm={2}>
             <h3>new releases</h3>
-            
-            <ChartsComponent newReleases={this.state.newReleases} />
+
+            <ChartsComponent newReleases={this.state.listOfRecords} />
           </Col>
         </Row>
       </div>
