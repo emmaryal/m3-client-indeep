@@ -7,7 +7,7 @@ class RecordService {
     // this.api  is a reusable base of the request containing the base url (baseURL)
     // of the API and the options ( `withCredentials: true` )
     this.api = axios.create({
-      baseURL: "http://localhost:5000/api",
+      baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
     });
   }
@@ -17,12 +17,12 @@ class RecordService {
     return pr;
   };
 
-getOneUser = (id) => {
-  const pr = this.api.get(`/users/${id}`).then((apiResponse) =>{
-    return apiResponse.data;
-  });
-  return pr;
-};
+  getOneUser = (id) => {
+    const pr = this.api.get(`/users/${id}`).then((apiResponse) => {
+      return apiResponse.data;
+    });
+    return pr;
+  };
 
   getOne = (id) => {
     const pr = this.api.get(`/records/${id}`).then((apiResponse) => {
@@ -36,20 +36,27 @@ getOneUser = (id) => {
     return pr;
   };
 
-/* updateOneRecord = (id) => {
+  /* updateOneRecord = (id) => {
   const pr = this.api.put(`/records/${id}`);
   return pr;
 }
  */
-/* updateOneUser = (id) => {
+  /* updateOneUser = (id) => {
   const pr = this.api.put(`/users/${id}`);
   return pr;
 } */
 
-updateFave = (userId, recordId) => {
-const pr = this.api.put(`/users/${userId}/records/${recordId}`);
-return pr;
-}
+  updateFave = (userId, recordId) => {
+    const pr = this.api.put(`/users/${userId}/records/${recordId}`);
+    return pr;
+  };
+
+  removeFave = (recordId, userId) => {
+    const pr = this.api.put(`/records/${recordId}/users/${userId}`);
+    return pr;
+  };
+
+
 
   deleteOne = (id) => {
     const pr = this.api.delete(`/records/${id}`);

@@ -18,9 +18,7 @@ class ChartsComponent extends Component {
       .me()
       .then((data) => {
         const { email } = data;
-        console.log("data from promise:", data);
         this.setState({ currentUser: email });
-        console.log("this.state:", this.state);
       })
       .catch((err) => console.log(err));
   };
@@ -49,29 +47,25 @@ class ChartsComponent extends Component {
     const { newReleases } = this.props;
 
     return (
-    
-        
-        <div >
-          
-           {/*  {this.props.listOfRecords.map((recordObj) => {
+      <div>
+        {/*  {this.props.listOfRecords.map((recordObj) => {
             return <p key={recordObj._id}>{recordObj.title}</p>;
           })} */}
 
-          {this.props.newReleases.map((record) => {
-            return(
+        {this.props.newReleases.map((record) => {
+          return (
             <div key={record._id} className="chart-list">
-            
               <Link to={`/records/${record._id}`}>
-                <p className = "chart-text">{record.title}</p>
+                <p className="chart-text">{record.title}</p>
               </Link>
               <span>artist: {record.artist} </span>
               <br />
               <span>label:{record.label} </span>
               <p>Price: {record.price}€</p>
-            </div>);
-          })}
-        </div>
-      
+            </div>
+          );
+        })}
+      </div>
     );
   }
 }

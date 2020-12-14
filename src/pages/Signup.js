@@ -27,7 +27,7 @@ class Signup extends Component {
     // req.body to .create() method when creating a new project in '/api/projects' POST route
     uploadData.append("profilePic", file);
     axios
-      .post("http://localhost:5000/auth/upload", uploadData, {
+      .post(`${process.env.REACT_APP_API_URL}/auth/upload`, uploadData, {
         withCredentials: true,
       })
       .then((response) => {

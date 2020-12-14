@@ -32,7 +32,7 @@ class RecordDetails extends Component {
     sleeveCondition: "",
     weight: "",
     catno: "",
-    comments:"",
+    comments: "",
     price: 0,
     defaultImg: "./../images/recordPlaceholderImage.jpeg",
     favoritedBy: [],
@@ -40,7 +40,7 @@ class RecordDetails extends Component {
     currentUser: null,
     isFavourite: false,
     checkout: true,
-    setCheckout: true
+    setCheckout: true,
     /* showPaypal: false, */
   };
 
@@ -78,7 +78,7 @@ class RecordDetails extends Component {
     recordService
       .getOne(id)
       .then((data) => {
-        console.log("data from getsinglerecord",data);
+        console.log("data from getsinglerecord", data);
         //const theRecord = {data}
         const {
           id,
@@ -118,28 +118,35 @@ class RecordDetails extends Component {
       .catch((err) => console.log(err));
   };
 
-
-
   addFavourite = () => {
     /* this.state.isFavourite
       ? (this.setState({ isFavourite: false}))
      
       : this.setState({ isFavourite: true }); */
-      this.setState({isFavourite: !this.state.isFavourite})
+    this.setState({ isFavourite: !this.state.isFavourite });
     const userId = this.state.currentUser;
     const { id } = this.props.match.params;
     const recordId = id;
-    console.log("record id:", id)
-    recordService
-      .updateFave(userId, recordId)
-      .then()
-      .catch((error) => console.log(error));
+    console.log("isFavourite:", this.state.isFavourite);
+    console.log("record id:", id);
+    console.log("userid:", userId);
+
+    if (this.state.isFavourite === false) {
+      recordService
+        .updateFave(userId, recordId)
+        .then()
+        .catch((error) => console.log(error));
+    } else {
+      recordService
+        .removeFave(recordId, userId)
+        .then()
+        .catch((error) => console.log(error));
+    }
   };
 
   setPopularity = (id) => {
     //get
-  }
-
+  };
 
   setCheckout = () => {};
   render() {
@@ -163,40 +170,49 @@ class RecordDetails extends Component {
             <p>catalogue no.: {this.state.catno}</p>
             <p>comments: {this.state.comments}</p>
             <div>price: {this.state.price}€</div>
+            <br />
+            <Link to={"/"}>see all</Link>
           </Col>
           <Col md={3}>
-          <img style={{ width: "200px" }} src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"/>
-          <img style={{ width: "200px" }} src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"/>
-          <br /> 
+            <img
+              style={{ width: "200px" }}
+              src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
+            />
+            <img
+              style={{ width: "200px" }}
+              src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
+            />
+            <br />
 
-           
-            {(this.state.isFavourite)?
-            <button onClick={this.addFavourite}>Remove from favourites</button>
-            :
-            <button onClick={this.addFavourite}>Add to favourites</button>
-            }
+            {this.state.isFavourite ? (
+              <button onClick={this.addFavourite}>
+                Remove from favourites
+              </button>
+            ) : (
+              <button onClick={this.addFavourite}>Add to favourites</button>
+            )}
+            
           </Col>
-        <Col sm={3}>
-        
-        {this.state.checkout === true ? (
-          <div className="payment-div">
-            <ReactPayPal toPay={this.state.price} />
-          </div>
-        ) : (
-          <div>
-            <h1>React-PayPal</h1>
-            <button
-              onClick={() => {
-                this.setCheckout(true);
-              }}
-              className="checkout-button"
-            >
-              Checkout
-            </button>
-          </div>
-        )}
+          <Col sm={3}>
+            {this.state.checkout === true ? (
+              <div className="payment-div">
+                <ReactPayPal toPay={this.state.price} />
+              </div>
+            ) : (
+              <div>
+                <h1>React-PayPal</h1>
+                <button
+                  onClick={() => {
+                    this.setCheckout(true);
+                  }}
+                  className="checkout-button"
+                >
+                  Checkout
+                </button>
+              </div>
+            )}
 
-        {/* <PayPalButton
+            {/* <PayPalButton
           client={CLIENT}
           env={ENV}
           commit={true}
@@ -206,7 +222,7 @@ class RecordDetails extends Component {
           onError={onError}
           onCancel={onCancel}
         /> */}
-        </Col>
+          </Col>
         </Row>
       </Container>
     );

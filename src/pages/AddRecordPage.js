@@ -42,7 +42,7 @@ class AddRecordPage extends Component {
     } = this.state;
 
     axios
-      .post("http://localhost:5000/api/records", {
+      .post(`$process.env.REACT_APP_API_URL}/api/records`, {
         title,
         artist,
         format,

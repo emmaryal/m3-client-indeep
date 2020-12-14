@@ -87,7 +87,7 @@ componentDidMount() {
     const { id } = this.props.match.params;
 
     axios
-      .put(`http://localhost:5000/api/records/${id}`, {
+      .put(`${process.env.REACT_APP_API_URL}/api/records/${id}`, {
         title,
         artist,
         format,
@@ -112,7 +112,7 @@ componentDidMount() {
     const { id } = this.props.match.params;
 
     axios
-      .delete(`http://localhost:5000/api/records/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/records/${id}`)
       .then(() => this.props.history.push("/")) // causes Router URL change
       .catch((err) => console.log(err));
   };

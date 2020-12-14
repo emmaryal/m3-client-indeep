@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Search from "../components/Search";
@@ -12,26 +12,40 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
-
+import Pagination from "./../components/Pagination";
 import ChartsComponent from "../components/ChartsComponent";
+
+import ReactPaginate from "react-paginate";
 
 class RecordListPage extends Component {
   state = {
     listOfRecords: [],
+    currentRecords: [],
     newReleases: [],
-    randomRecord: {},
     currentUser: null,
+    currentPage: null,
+    totalPages: null 
   };
+
+  //state = { allCountries: [], (listOfRecords)
+  //currentCountries: [], (currentRecords)
+  //currentPage: null,
+  //totalPages: null }
+
   getAllRecords = () => {
-    axios.get(`http://localhost:5000/api/records`).then((apiResponse) => {
-      this.setState({ listOfRecords: apiResponse.data });
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/records/`)
+      .then((apiResponse) => {
+        this.setState({ listOfRecords: apiResponse.data });
+        
+      });
   };
 
   getNewReleases = () => {
     const newReleases = [...this.state.listOfRecords];
     this.setState({ newReleases: newReleases });
-    console.log("newreleases:", this.state.newReleases);
+    console.log("newReleases:", [...newReleases]);
+    console.log("this.state.listOfRecords:", this.state.listOfRecords);
   };
 
   componentDidMount() {
@@ -39,14 +53,26 @@ class RecordListPage extends Component {
     this.getCurrentUser();
     this.getNewReleases();
   }
+
+  /*  componentDidMount() {
+    const { data: allCountries = [] } = Countries.findAll();
+    this.setState({ allCountries });
+  } */
+  onPageChanged = (data) => {
+    const { listOfRecords } = this.state;
+    const { currentPage, totalPages, pageLimit } = data;
+    const offset = (currentPage - 1) * pageLimit;
+    const currentRecords = listOfRecords.slice(offset, offset + pageLimit);
+
+    this.setState({ currentPage, currentRecords, totalPages });
+  };
+
   getCurrentUser = () => {
     authService
       .me()
       .then((data) => {
         const { email } = data;
-        console.log("data from promise:", data);
         this.setState({ currentUser: email });
-        console.log("this.state:", this.state);
       })
       .catch((err) => console.log(err));
   };
@@ -54,13 +80,9 @@ class RecordListPage extends Component {
   filterRecords = (input) => {
     const finder = this.state.listOfRecords.filter(
       (el) =>
-        el.title
-          .toLowerCase()
-          .includes(
-            input.toLowerCase()
-          ) /* ||
+        el.title.toLowerCase().includes(input.toLowerCase()) ||
         el.artist.toLowerCase().includes(input.toLowerCase()) ||
-        el.label.toLowerCase().includes(input.toLowerCase()) */
+        el.label.toLowerCase().includes(input.toLowerCase())
     );
 
     this.setState({ listOfRecords: finder });
@@ -174,7 +196,14 @@ class RecordListPage extends Component {
   };
 
   render() {
-    const { listOfRecords } = this.state; //  <--  ADD
+    const {
+      listOfRecords,
+      currentRecords,
+      currentPage,
+      totalPages,
+    } = this.state;
+
+    const totalRecords = listOfRecords.length;
 
     return (
       <div>
@@ -232,6 +261,47 @@ class RecordListPage extends Component {
         </Button>
         <Row>
           <Col sm={10}>
+            
+            
+{/*           return (
+      <div className="container mb-5">
+        <div className="row d-flex flex-row py-5">
+          <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
+            <div className="d-flex flex-row align-items-center">
+              <h2 className={headerClass}>
+                <strong className="text-secondary">{totalCountries}</strong> Countries
+              </h2>
+              { currentPage && (
+                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
+                  Page <span className="font-weight-bold">{ currentPage }</span> / <span className="font-weight-bold">{ totalPages }</span>
+                </span>
+              ) }
+            </div>
+            <div className="d-flex flex-row py-4 align-items-center">
+              <Pagination totalRecords={totalCountries} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+            </div>
+          </div>
+          { currentCountries.map(country => <CountryCard key={country.cca3} country={country} />) }
+        </div>
+      </div>
+    );
+  }
+} */}
+            
+            
+            
+            
+            
+          <div> 
+          { currentPage && (
+                <span >
+                  Page <span>{ currentPage }</span> / <span >{ totalPages }</span>
+                </span>
+              ) }
+              </div> 
+              <div >
+              <Pagination totalRecords={totalRecords} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+            </div>  
             <div>
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
@@ -254,11 +324,6 @@ class RecordListPage extends Component {
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
                       />
-                      {record.favoritedBy ? (
-                        <p>Popularity: {record.favoritedBy.length}</p>
-                      ) : (
-                        <p>popularity: 0</p>
-                      )}
 
                       {this.state.currentUser === "admin" ? (
                         <Link to={`/records/edit/${record._id}`}>
@@ -270,6 +335,8 @@ class RecordListPage extends Component {
                 </div>
               ))}
             </div>
+
+            
           </Col>
           <Col sm={2}>
             <h3>new releases</h3>
