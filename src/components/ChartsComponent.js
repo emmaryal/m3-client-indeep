@@ -8,6 +8,7 @@ class ChartsComponent extends Component {
 
   componentDidMount() {
     this.getCurrentUser();
+    this.getNewReleases()
   }
 
   getCurrentUser = () => {
@@ -20,6 +21,14 @@ class ChartsComponent extends Component {
       .catch((err) => console.log(err));
   };
 
+  getNewReleases = () => {
+    const recordsCopy = [...this.props.newReleases];
+    console.log(this.props)
+    const newReleases = recordsCopy.slice(Math.max(recordsCopy.length-10, 0));
+
+    this.setState({ newReleases: newReleases });
+    
+  };
   /*   filterRecords = (input) => {
     const finder = this.state.listOfRecords.filter(
       (el) =>
@@ -49,7 +58,7 @@ class ChartsComponent extends Component {
             return <p key={recordObj._id}>{recordObj.title}</p>;
           })} */}
 
-        {this.props.newReleases.map((record) => {
+        {this.state.newReleases?this.state.newReleases.map((record) => {
           return (
             <div key={record._id} className="chart-list">
               <Link to={`/records/${record._id}`}>
@@ -61,7 +70,7 @@ class ChartsComponent extends Component {
               <p>Price: {record.price}€</p>
             </div>
           );
-        })}
+        }):<h1>loading</h1>}
       </div>
     );
   }

@@ -11,24 +11,21 @@ import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
 import ChartsComponent from "../components/ChartsComponent";
 
-import Pagination from "react-js-pagination";
+import Pagination from "./../components/Pagination";
 
 class RecordListPage extends Component {
   state = {
     listOfRecords: [],
     currentRecords: [],
     newReleases: [],
-    currentUser: null,
-    currentPage: null,
-    totalPages: null/*  ,
-    activePage: 3 */
+    currentPage: 1,
+    currentUser: null
   };
 
-
- /*  handlePageChange = (pageNumber) =>{
-  console.log(`active page is ${pageNumber}`);
-  this.setState({activePage: pageNumber});
-  } */
+  changeCurrentPage = numPage => {
+    this.setState({ currentPage: numPage });
+    
+  };
 
 
   getAllRecords = () => {
@@ -38,19 +35,16 @@ class RecordListPage extends Component {
         this.setState({ listOfRecords: apiResponse.data });
         
       });
+      
   };
 
-  getNewReleases = () => {
-    const newReleases = [...this.state.listOfRecords];
-    this.setState({ newReleases: newReleases });
-    console.log("newReleases:", [...newReleases]);
-    console.log("this.state.listOfRecords:", this.state.listOfRecords);
-  };
+
+  
 
   componentDidMount() {
     this.getAllRecords();
     this.getCurrentUser();
-    this.getNewReleases();
+   
   }
 
 
@@ -245,6 +239,27 @@ class RecordListPage extends Component {
           Sort By Price (descending)
         </Button>
         <Row>
+        <div>
+        <div className="container">
+          
+          <p>
+            current Page: <strong>{this.state.currentPage}</strong>
+          </p>
+        
+          
+          <Pagination
+            currentPage={this.state.currentPage}
+            itemsCountPerPage={10}
+           totalItemsCount={1910}
+            //totalPages={10}
+            changeCurrentPage={this.changeCurrentPage}
+            theme="circle"
+          />
+          
+          
+        </div>
+      </div>
+        </Row><Row>
           <Col sm={10}>
             
             
@@ -255,32 +270,9 @@ class RecordListPage extends Component {
             
             
             <div>
-            {/* <Pagination
-           activePage={this.state.activePage}
-           itemsCountPerPage={10}
-           totalItemsCount={1910}
-           pageRangeDisplayed={5}
-           onChange={this.handlePageChange} />  */}
+       
 
-           <InfiniteScroll
-  dataLength={listOfRecords.length} 
-  //next={fetchData}
-  hasMore={true}
-  loader={<h4>Loading...</h4>}
-  endMessage={
-    <p style={{ textAlign: 'center' }}>
-      <b>Yay! You have seen it all</b>
-    </p>
-  }  /*refreshFunction={this.refresh}
-  pullDownToRefresh
-  pullDownToRefreshThreshold={50}
-  pullDownToRefreshContent={
-    <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-  }
-  releaseToRefreshContent={
-    <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-  }*/
->
+   
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
                   <Row>
@@ -293,6 +285,7 @@ class RecordListPage extends Component {
                       <p>Artist : {record.artist} </p>
                       <p>Label : {record.label}</p>
                       <p>Price: {record.price}€</p>
+                      
                     </Col>
                     <Col sm={4}>
                       <img
@@ -313,15 +306,17 @@ class RecordListPage extends Component {
                   </Row>
                 </div>
               
-              ))}  </InfiniteScroll> 
+              ))}  
             </div>
 
             
           </Col>
           <Col sm={2}>
             <h3>new releases</h3>
+{this.state.listOfRecords[0]?
+            <ChartsComponent newReleases={this.state.listOfRecords} />:
+            null}
 
-            <ChartsComponent newReleases={this.state.listOfRecords} />
           </Col>
         </Row>
       </div>
