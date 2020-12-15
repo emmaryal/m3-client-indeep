@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
-import UpdateRecordPage from "./UpdateRecordPage";
-import AddRecordPage from "./AddRecordPage";
-import PrivateRoute from "./../components/PrivateRoute";
-import { Switch, Route } from "react-router-dom";
+
 import { Home } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import RecordListPage from "./RecordListPage";

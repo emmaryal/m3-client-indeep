@@ -1,21 +1,17 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Search from "../components/Search";
-import PrivateRoute from "../components/PrivateRoute";
-//import Charts from "./../components/charts"
 import "./../App.css";
-//import RecordDetails from "./../components/RecordDetails"
-import { withAuth } from "./../context/auth-context";
+
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import InfiniteScroll from "react-infinite-scroll-component"
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
-import Pagination from "./../components/Pagination";
 import ChartsComponent from "../components/ChartsComponent";
 
-import ReactPaginate from "react-paginate";
+import Pagination from "react-js-pagination";
 
 class RecordListPage extends Component {
   state = {
@@ -24,13 +20,16 @@ class RecordListPage extends Component {
     newReleases: [],
     currentUser: null,
     currentPage: null,
-    totalPages: null 
+    totalPages: null/*  ,
+    activePage: 3 */
   };
 
-  //state = { allCountries: [], (listOfRecords)
-  //currentCountries: [], (currentRecords)
-  //currentPage: null,
-  //totalPages: null }
+
+ /*  handlePageChange = (pageNumber) =>{
+  console.log(`active page is ${pageNumber}`);
+  this.setState({activePage: pageNumber});
+  } */
+
 
   getAllRecords = () => {
     axios
@@ -54,18 +53,7 @@ class RecordListPage extends Component {
     this.getNewReleases();
   }
 
-  /*  componentDidMount() {
-    const { data: allCountries = [] } = Countries.findAll();
-    this.setState({ allCountries });
-  } */
-  onPageChanged = (data) => {
-    const { listOfRecords } = this.state;
-    const { currentPage, totalPages, pageLimit } = data;
-    const offset = (currentPage - 1) * pageLimit;
-    const currentRecords = listOfRecords.slice(offset, offset + pageLimit);
 
-    this.setState({ currentPage, currentRecords, totalPages });
-  };
 
   getCurrentUser = () => {
     authService
@@ -197,10 +185,7 @@ class RecordListPage extends Component {
 
   render() {
     const {
-      listOfRecords,
-      currentRecords,
-      currentPage,
-      totalPages,
+      listOfRecords
     } = this.state;
 
     const totalRecords = listOfRecords.length;
@@ -263,46 +248,39 @@ class RecordListPage extends Component {
           <Col sm={10}>
             
             
-{/*           return (
-      <div className="container mb-5">
-        <div className="row d-flex flex-row py-5">
-          <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
-            <div className="d-flex flex-row align-items-center">
-              <h2 className={headerClass}>
-                <strong className="text-secondary">{totalCountries}</strong> Countries
-              </h2>
-              { currentPage && (
-                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
-                  Page <span className="font-weight-bold">{ currentPage }</span> / <span className="font-weight-bold">{ totalPages }</span>
-                </span>
-              ) }
-            </div>
-            <div className="d-flex flex-row py-4 align-items-center">
-              <Pagination totalRecords={totalCountries} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-            </div>
-          </div>
-          { currentCountries.map(country => <CountryCard key={country.cca3} country={country} />) }
-        </div>
-      </div>
-    );
-  }
-} */}
+
             
             
             
             
             
-          <div> 
-          { currentPage && (
-                <span >
-                  Page <span>{ currentPage }</span> / <span >{ totalPages }</span>
-                </span>
-              ) }
-              </div> 
-              <div >
-              <Pagination totalRecords={totalRecords} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
-            </div>  
             <div>
+            {/* <Pagination
+           activePage={this.state.activePage}
+           itemsCountPerPage={10}
+           totalItemsCount={1910}
+           pageRangeDisplayed={5}
+           onChange={this.handlePageChange} />  */}
+
+           <InfiniteScroll
+  dataLength={listOfRecords.length} 
+  //next={fetchData}
+  hasMore={true}
+  loader={<h4>Loading...</h4>}
+  endMessage={
+    <p style={{ textAlign: 'center' }}>
+      <b>Yay! You have seen it all</b>
+    </p>
+  }  /*refreshFunction={this.refresh}
+  pullDownToRefresh
+  pullDownToRefreshThreshold={50}
+  pullDownToRefreshContent={
+    <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+  }
+  releaseToRefreshContent={
+    <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+  }*/
+>
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
                   <Row>
@@ -313,17 +291,18 @@ class RecordListPage extends Component {
                         </h5>
                       </Link>
                       <p>Artist : {record.artist} </p>
+                      <p>Label : {record.label}</p>
                       <p>Price: {record.price}€</p>
                     </Col>
                     <Col sm={4}>
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
-                      />
+                      alt="record"/>
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
-                      />
+                        alt="record"/>
 
                       {this.state.currentUser === "admin" ? (
                         <Link to={`/records/edit/${record._id}`}>
@@ -333,7 +312,8 @@ class RecordListPage extends Component {
                     </Col>{" "}
                   </Row>
                 </div>
-              ))}
+              
+              ))}  </InfiniteScroll> 
             </div>
 
             

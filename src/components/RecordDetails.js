@@ -1,23 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import recordService from "./../lib/records-service";
-// is this how we connect me?? /auth/me.....
 import authService from "./../lib/auth-service";
-import { ControlPointDuplicate } from "@material-ui/icons";
-import ReactBootstrap from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-//import { PayPalButton } from "react-paypal-button-v2";
-//import PayPalButton from "./PayPalButton";
-//import ReactPayPal from "./ReactPaypal";
+
 import ReactPayPal from "./ReactPaypal";
-/* const CLIENT = {
-  sandbox: "xxxXXX",
-  production: "xxxXXX",
-};
-const ENV = process.env.NODE_ENV === "production" ? "production" : "sandbox"; */
+
 class RecordDetails extends Component {
   state = {
     id: "",
@@ -177,10 +167,12 @@ class RecordDetails extends Component {
             <img
               style={{ width: "200px" }}
               src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
+              alt="record"
             />
             <img
               style={{ width: "200px" }}
               src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
+              alt="record"
             />
             <br />
 
@@ -191,7 +183,6 @@ class RecordDetails extends Component {
             ) : (
               <button onClick={this.addFavourite}>Add to favourites</button>
             )}
-            
           </Col>
           <Col sm={3}>
             {this.state.checkout === true ? (

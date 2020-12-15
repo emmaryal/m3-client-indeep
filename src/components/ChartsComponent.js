@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import Search from "./Search";
-import PrivateRoute from "./PrivateRoute";
 import "./../App.css";
 import authService from "../lib/auth-service";
 

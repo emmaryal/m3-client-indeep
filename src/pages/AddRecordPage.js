@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import {Redirect} from "react-router-dom";
-import ReactBootstrap from "react-bootstrap";
+
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+
 import Container from "react-bootstrap/Container"
 
 class AddRecordPage extends Component {

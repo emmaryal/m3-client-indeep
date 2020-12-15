@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 import recordService from "./../lib/records-service";
-import ReactBootstrap from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container"
+import Container from "react-bootstrap/Container";
 
 class UpdateRecordPage extends Component {
   state = {
@@ -23,11 +22,11 @@ class UpdateRecordPage extends Component {
     price: 0,
   };
 
-componentDidMount() {
+  componentDidMount() {
     this.getSingleRecord();
   }
 
- getSingleRecord = () => {
+  getSingleRecord = () => {
     const { id } = this.props.match.params;
     console.log("id:", id);
     recordService
@@ -60,7 +59,7 @@ componentDidMount() {
           sleeveCondition,
           weight,
           catno,
-          image,
+
           comments,
           price,
         });
@@ -104,7 +103,7 @@ componentDidMount() {
         this.getSingleRecord();
         this.props.history.push("/");
       })
-      
+
       .catch((err) => console.log(err));
   };
 
@@ -123,7 +122,7 @@ componentDidMount() {
   };
   render() {
     return (
-      <Container className = "card">
+      <Container className="card">
         <Form className="forms-input" onSubmit={this.handleFormSubmit}>
           <Form.Row>
             <Form.Group as={Col} controlId="exampleForm.ControlTitle">
@@ -218,12 +217,13 @@ componentDidMount() {
               />
             </Form.Group>
           </Form.Row>
-{/*           <Button variant="secondary" onClick={this.handleSubmit}>Update Record</Button>
- */}          <input variant="secondary" type="submit" value="Update Record" />
-        <br />
-        <Button variant="secondary" onClick={this.deleteRecord}>
-          Delete Record
-        </Button>
+          {/*           <Button variant="secondary" onClick={this.handleSubmit}>Update Record</Button>
+           */}{" "}
+          <input variant="secondary" type="submit" value="Update Record" />
+          <br />
+          <Button variant="secondary" onClick={this.deleteRecord}>
+            Delete Record
+          </Button>
         </Form>
       </Container>
     );

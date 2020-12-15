@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
 
@@ -17,12 +16,12 @@ class Navbar extends Component {
             <img
               className="rotate"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU"
-            />
+            alt="record"/>
           </Link>
         ) : (
           <Link to={"/"} id="home-btn">
-            <img className="rotate" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU" />
-          </Link>
+            <img className="rotate" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU" alt="record" />
+            </Link>
         )}
         <h1 className="indeepTitle">Indeep Records</h1>
 
