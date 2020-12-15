@@ -41,17 +41,22 @@ class Private extends Component {
  :  
  <div>
  <h4>Welcome {this.props.user && this.props.user.email}</h4>
-<p> here we will have shopping cart stuff and links to faves</p>
+{/* {this.props.user.favouriteRecords[0] ? <p> your favourite records:
+  {this.props.favouriteRecords.map((fav) => (
+                <div key={fav._id} className="card">
+                <p>{fav._id}</p>
+                </div>))}
+</p>: <p>suggestions for you: </p>} */}
 
 
 
 
  </div>
-}
+} 
 
        
         <br /> 
-
+{/*}
         {/*<Switch>
          <PrivateRoute
             exact

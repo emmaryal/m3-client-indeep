@@ -5,8 +5,13 @@ import authService from "./../lib/auth-service";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
-import ReactPayPal from "./ReactPaypal";
+const stripePromise = loadStripe("pk_test_51HykoTFq2ycg13FNvuYLaF0ahXb5GLoqRe2KTQSQsWbCRzdSPw9NBIIUclD8i3EvDSG3e7kqU5IwdBSI8bXhXeg800d9VLE2v4");
+
+
 
 class RecordDetails extends Component {
   state = {
@@ -29,14 +34,10 @@ class RecordDetails extends Component {
     count: 0,
     currentUser: null,
     isFavourite: false,
-    checkout: true,
-    setCheckout: true,
-    /* showPaypal: false, */
+  
   };
 
-  /* showPaypalButtons = () => {
-    this.setState({ showPaypal: true });
-  }; */
+
   componentDidMount() {
     this.getSingleRecord();
     this.getCurrentSessionUser();
@@ -140,11 +141,7 @@ class RecordDetails extends Component {
 
   setCheckout = () => {};
   render() {
-    /* const onSuccess = (payment) => console.log("Successful payment!", payment);
-    const onError = (error) =>
-      console.log("Erroneous payment OR failed to load script!", error);
-    const onCancel = (data) => console.log("Cancelled payment!", data); */
-
+    
     return (
       <Container className="card">
         <Row>
@@ -185,34 +182,19 @@ class RecordDetails extends Component {
             )}
           </Col>
           <Col sm={3}>
-            {this.state.checkout === true ? (
-              <div className="payment-div">
-                <ReactPayPal toPay={this.state.price} />
-              </div>
-            ) : (
-              <div>
-                <h1>React-PayPal</h1>
-                <button
-                  onClick={() => {
-                    this.setCheckout(true);
-                  }}
-                  className="checkout-button"
-                >
-                  Checkout
-                </button>
-              </div>
-            )}
+          <div className="App">
+      <div className="product">
+        
+        <div>
+          <Elements stripe={stripePromise}>
+            <CheckoutForm recordTitle={this.state.title} recordPrice={this.state.price}/>
+          </Elements>
+        </div>
+      </div>
+    </div>
 
-            {/* <PayPalButton
-          client={CLIENT}
-          env={ENV}
-          commit={true}
-          currency={"EUR"}
-          total={100}
-          onSuccess={onSuccess}
-          onError={onError}
-          onCancel={onCancel}
-        /> */}
+      
+    
           </Col>
         </Row>
       </Container>

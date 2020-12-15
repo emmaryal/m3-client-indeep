@@ -95,7 +95,7 @@ export default class ReactPagination extends React.Component {
     }
     return false;
   };
-  showLastPagi = () => {
+  showLastPage = () => {
     if (this.props.currentPage !== this.props.totalPages) {
       return (
         <a
@@ -162,7 +162,7 @@ export default class ReactPagination extends React.Component {
                 );
               })}
               {this.showEllipsis()}
-              {this.showLastPagi()}
+              {this.showLastPage()}
             </React.Fragment>
           )}
           {this.showNext()}
@@ -171,9 +171,9 @@ export default class ReactPagination extends React.Component {
     );
   }
 }
-ReactPagination.defaultProps = {
+/* ReactPagination.defaultProps = {
   theme: "square-i",
   theme: "default",
   currentPage: 1,
   totalPages: 15
-};
+}; */

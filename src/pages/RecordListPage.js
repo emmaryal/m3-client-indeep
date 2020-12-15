@@ -1,11 +1,10 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Search from "../components/Search";
 import "./../App.css";
 
 import Button from "react-bootstrap/Button";
-import InfiniteScroll from "react-infinite-scroll-component"
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
@@ -19,35 +18,25 @@ class RecordListPage extends Component {
     currentRecords: [],
     newReleases: [],
     currentPage: 1,
-    currentUser: null
+    currentUser: null,
   };
 
-  changeCurrentPage = numPage => {
+  changeCurrentPage = (numPage) => {
     this.setState({ currentPage: numPage });
-    
   };
-
 
   getAllRecords = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/records/`)
       .then((apiResponse) => {
         this.setState({ listOfRecords: apiResponse.data });
-        
       });
-      
   };
-
-
-  
 
   componentDidMount() {
     this.getAllRecords();
     this.getCurrentUser();
-   
   }
-
-
 
   getCurrentUser = () => {
     authService
@@ -178,9 +167,7 @@ class RecordListPage extends Component {
   };
 
   render() {
-    const {
-      listOfRecords
-    } = this.state;
+    const { listOfRecords } = this.state;
 
     const totalRecords = listOfRecords.length;
 
@@ -239,40 +226,28 @@ class RecordListPage extends Component {
           Sort By Price (descending)
         </Button>
         <Row>
-        <div>
-        <div className="container">
-          
-          <p>
-            current Page: <strong>{this.state.currentPage}</strong>
-          </p>
-        
-          
-          <Pagination
-            currentPage={this.state.currentPage}
-            itemsCountPerPage={10}
-           totalItemsCount={1910}
-            //totalPages={10}
-            changeCurrentPage={this.changeCurrentPage}
-            theme="circle"
-          />
-          
-          
-        </div>
-      </div>
-        </Row><Row>
+          <div>
+            <div className="container">
+              <p>
+                current Page: <strong>{this.state.currentPage}</strong>
+              </p>
+
+              <Pagination
+                currentPage={this.state.currentPage}
+                itemsCountPerPage={10}
+                totalItemsCount={1910}
+                totalPages={20}
+                changeCurrentPage={this.changeCurrentPage}
+                theme="circle"
+              />
+            </div>
+          </div>
+        </Row>
+        <Row>
           <Col sm={10}>
-            
-            
-
-            
-            
-            
-            
-            
             <div>
-       
 
-   
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
                   <Row>
@@ -285,17 +260,18 @@ class RecordListPage extends Component {
                       <p>Artist : {record.artist} </p>
                       <p>Label : {record.label}</p>
                       <p>Price: {record.price}€</p>
-                      
                     </Col>
                     <Col sm={4}>
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
-                      alt="record"/>
+                        alt="record"
+                      />
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
-                        alt="record"/>
+                        alt="record"
+                      />
 
                       {this.state.currentUser === "admin" ? (
                         <Link to={`/records/edit/${record._id}`}>
@@ -305,18 +281,14 @@ class RecordListPage extends Component {
                     </Col>{" "}
                   </Row>
                 </div>
-              
-              ))}  
+              ))}
             </div>
-
-            
           </Col>
           <Col sm={2}>
             <h3>new releases</h3>
-{this.state.listOfRecords[0]?
-            <ChartsComponent newReleases={this.state.listOfRecords} />:
-            null}
-
+            {this.state.listOfRecords[0] ? (
+              <ChartsComponent newReleases={this.state.listOfRecords} />
+            ) : null}
           </Col>
         </Row>
       </div>
