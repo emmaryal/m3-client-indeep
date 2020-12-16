@@ -41,6 +41,7 @@ class RecordDetails extends Component {
   componentDidMount() {
     this.getSingleRecord();
     this.getCurrentSessionUser();
+   
   }
 
   getCurrentSessionUser = () => {
@@ -65,12 +66,12 @@ class RecordDetails extends Component {
 
   getSingleRecord = () => {
     const { id } = this.props.match.params;
-    console.log("record id:", id);
+   
     recordService
       .getOne(id)
       .then((data) => {
-        console.log("data from getsinglerecord", data);
-        //const theRecord = {data}
+       
+       
         const {
           id,
           listingId,
@@ -109,11 +110,14 @@ class RecordDetails extends Component {
       .catch((err) => console.log(err));
   };
 
-  addFavourite = () => {
-    /* this.state.isFavourite
-      ? (this.setState({ isFavourite: false}))
-     
-      : this.setState({ isFavourite: true }); */
+
+  
+
+
+
+
+addFavourite = () => {
+  
     this.setState({ isFavourite: !this.state.isFavourite });
     const userId = this.state.currentUser;
     const { id } = this.props.match.params;
@@ -139,7 +143,7 @@ class RecordDetails extends Component {
     //get
   };
 
-  setCheckout = () => {};
+ 
   render() {
     
     return (

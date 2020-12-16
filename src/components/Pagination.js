@@ -53,9 +53,9 @@ export default class ReactPagination extends React.Component {
             fArray.push(nextProps.currentPage + 1);
           }
           if (
-            nextProps.currentPage == nextProps.totalPages - 2 ||
-            nextProps.currentPage == nextProps.totalPages - 1 ||
-            nextProps.currentPage == nextProps.totalPages
+            nextProps.currentPage === nextProps.totalPages - 2 ||
+            nextProps.currentPage === nextProps.totalPages - 1 ||
+            nextProps.currentPage === nextProps.totalPages
           ) {
             this.setState({ showEllipis: false });
           } else {

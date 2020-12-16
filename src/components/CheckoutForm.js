@@ -26,7 +26,7 @@ class CheckoutForm extends React.Component {
       <div>
         <div class="product-info">
           <h3 className="product-title">{this.props.recordTitle}</h3>
-          <h4 className="product-price">{this.props.recordPrice}</h4>
+          <h4 className="product-price">{this.props.recordPrice}€</h4>
         </div>
         <form onSubmit={this.handleSubmit}>
           <CardSection />
@@ -39,7 +39,11 @@ class CheckoutForm extends React.Component {
   }
 }
 
-export default function InjectedCheckoutForm() {
+export default CheckoutForm;
+
+
+/* 
+function InjectedCheckoutForm() {
   return (
     <ElementsConsumer>
       {({ stripe, elements }) => (
@@ -47,4 +51,4 @@ export default function InjectedCheckoutForm() {
       )}
     </ElementsConsumer>
   );
-}
+} */

@@ -10,19 +10,13 @@ import Row from "react-bootstrap/Row";
 import authService from "../lib/auth-service";
 import ChartsComponent from "../components/ChartsComponent";
 
-import Pagination from "./../components/Pagination";
 
 class RecordListPage extends Component {
   state = {
     listOfRecords: [],
     currentRecords: [],
     newReleases: [],
-    currentPage: 1,
-    currentUser: null,
-  };
-
-  changeCurrentPage = (numPage) => {
-    this.setState({ currentPage: numPage });
+    currentUser: null
   };
 
   getAllRecords = () => {
@@ -225,41 +219,29 @@ class RecordListPage extends Component {
         >
           Sort By Price (descending)
         </Button>
-        <Row>
-          <div>
-            <div className="container">
-              <p>
-                current Page: <strong>{this.state.currentPage}</strong>
-              </p>
-
-              <Pagination
-                currentPage={this.state.currentPage}
-                itemsCountPerPage={10}
-                totalItemsCount={1910}
-                totalPages={20}
-                changeCurrentPage={this.changeCurrentPage}
-                theme="circle"
-              />
-            </div>
-          </div>
-        </Row>
+        
         <Row>
           <Col sm={10}>
             <div>
-
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+             
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
                   <Row>
                     <Col sm={8}>
                       <Link to={`/records/${record._id}`}>
-                        <h5 className="indeepText">
+                        <h6 className="indeepText">
                           Record Title : {record.title}
-                        </h5>
+                        </h6>
                       </Link>
+                        <ul  className="cardList" >
+                          <li>Artist : {record.artist} </li>
+                          <li>Label : {record.label} </li>
+                          <li>Price : {record.price}€ </li>
+                        </ul>
+{/* 
                       <p>Artist : {record.artist} </p>
                       <p>Label : {record.label}</p>
-                      <p>Price: {record.price}€</p>
+                      <p>Price: {record.price}€</p> */}
                     </Col>
                     <Col sm={4}>
                       <img

@@ -60,7 +60,7 @@ class ChartsComponent extends Component {
 
         {this.state.newReleases?this.state.newReleases.map((record) => {
           return (
-            <div key={record._id} className="chart-list">
+            <div key={record._id} className="card">
               <Link to={`/records/${record._id}`}>
                 <p className="chart-text">{record.title}</p>
               </Link>
