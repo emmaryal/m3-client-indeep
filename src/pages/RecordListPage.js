@@ -13,6 +13,7 @@ import ChartsComponent from "../components/ChartsComponent";
 
 class RecordListPage extends Component {
   state = {
+    
     listOfRecords: [],
     currentRecords: [],
     newReleases: [],
@@ -24,12 +25,14 @@ class RecordListPage extends Component {
       .get(`${process.env.REACT_APP_API_URL}/api/records/`)
       .then((apiResponse) => {
         this.setState({ listOfRecords: apiResponse.data });
+        
       });
   };
 
   componentDidMount() {
     this.getAllRecords();
     this.getCurrentUser();
+  
   }
 
   getCurrentUser = () => {
@@ -41,6 +44,8 @@ class RecordListPage extends Component {
       })
       .catch((err) => console.log(err));
   };
+
+
 
   filterRecords = (input) => {
     const finder = this.state.listOfRecords.filter(
@@ -162,15 +167,17 @@ class RecordListPage extends Component {
 
   render() {
     const { listOfRecords } = this.state;
+    
+
 
     const totalRecords = listOfRecords.length;
 
     return (
-      <div>
+      <div className="sort-list">
         <Search filterRecords={this.filterRecords} />
 
         <Button
-          className="mb-2"
+          className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.getAllRecords}
         >
@@ -178,77 +185,77 @@ class RecordListPage extends Component {
         </Button>
 
         <Button
-          className="mb-2"
+          className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleRandom}
         >
           Record of the Day
         </Button>
         <Button
-          className="mb-2"
+          className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByTitle}
         >
           Sort By Title
         </Button>
         <Button
-          className="mb-2"
+          className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByArtist}
         >
           Sort By Artist
         </Button>
         <Button
-          className="mb-2"
+         className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByLabel}
         >
           Sort By Label
         </Button>
         <Button
-          className="mb-2"
+         className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByAscPrice}
         >
-          Sort By Price (ascending)
+          Sort By Price ☟
         </Button>
         <Button
-          className="mb-2"
+          className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByDesPrice}
         >
-          Sort By Price (descending)
+          Sort By Price ☟
         </Button>
         
         <Row>
-          <Col sm={10}>
+          <Col sm={8}>
             <div>
              
               {listOfRecords.map((record) => (
                 <div key={record._id} className="card">
-                  <Row>
-                    <Col sm={8}>
+               <Row>
+                    <Col sm={6}>
                       <Link to={`/records/${record._id}`}>
                         <h6 className="indeepText">
-                          Record Title : {record.title}
+                         {record.title}
                         </h6>
                       </Link>
-                        <ul  className="cardList" >
+                        {/* <ul  className="cardList" >
                           <li>Artist : {record.artist} </li>
                           <li>Label : {record.label} </li>
                           <li>Price : {record.price}€ </li>
-                        </ul>
-{/* 
-                      <p>Artist : {record.artist} </p>
-                      <p>Label : {record.label}</p>
-                      <p>Price: {record.price}€</p> */}
-                    </Col>
+                        </ul> */}
+
+                      <p><b>Artist: </b> {record.artist} </p>
+                      <p><b>Label: </b>{record.label}</p>
+                      <p><b>Price: </b>{record.price}€</p> 
+                   </Col>
                     <Col sm={4}>
-                      <img
+                      {/* <img
                         style={{ width: "100px", padding: "10px" }}
-                        src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
-                        alt="record"
-                      />
+                      src={record.img}
+                         alt="record"
+                      /> */}
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
@@ -260,18 +267,18 @@ class RecordListPage extends Component {
                           <p>Update or Delete this record</p>
                         </Link>
                       ) : null}
-                    </Col>{" "}
-                  </Row>
+                   </Col>{" "}
+               </Row>
                 </div>
               ))}
             </div>
-          </Col>
-          <Col sm={2}>
-            <h3>new releases</h3>
+       </Col>
+          <Col  sm={4} >
+            <p className="chart-text">new releases</p>
             {this.state.listOfRecords[0] ? (
               <ChartsComponent newReleases={this.state.listOfRecords} />
             ) : null}
-          </Col>
+         </Col>
         </Row>
       </div>
     );

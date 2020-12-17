@@ -36,14 +36,15 @@ console.log("currentUser in getFavourites fn:", currentUser)
             your favourite records:
           
             {this.state.userObj.favouriteRecords.map((fav) => (
-              <div key={fav._id}className="card" style={{"width": "40%"}}>
+              <div key={fav._id} className="fave-card" style={{"width": "30%"}}>
               <Link to={`/records/${fav._id}`}>
                 <p>{fav.title}</p>
                 </Link>
-                <p>{fav._id}</p>
-                <p>{fav.artist}</p>
-                <p>{fav.label}</p>
-                <p>{fav.price}€</p>
+                <ul  className="cardList" >
+                          <li>Artist : {fav.artist} </li>
+                          <li>Label : {fav.label} </li>
+                          <li>Price : {fav.price}€ </li>
+                        </ul>
               </div>
             ))}
           </p>
