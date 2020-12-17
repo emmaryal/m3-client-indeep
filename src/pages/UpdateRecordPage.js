@@ -219,9 +219,9 @@ class UpdateRecordPage extends Component {
           </Form.Row>
           {/*           <Button variant="secondary" onClick={this.handleSubmit}>Update Record</Button>
            */}{" "}
-          <input variant="secondary" type="submit" value="Update Record" />
+          <input className = "btn-2 mb-2" variant="secondary" type="submit" value="Update Record" />
           <br />
-          <Button variant="secondary" onClick={this.deleteRecord}>
+          <Button className="btn-2 mb-2"variant="secondary" onClick={this.deleteRecord}>
             Delete Record
           </Button>
         </Form>

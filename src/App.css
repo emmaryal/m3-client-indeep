@@ -59,7 +59,7 @@ justify-content: flex-end;
 
 .sort-list {
   font-family: 'Syne Mono','Courier New', Courier, monospace;
-  font-size: 26px;
+  font-size: 28px;
  
 }
 
@@ -173,7 +173,7 @@ a:active {
 
 
 
-.StripeElement {
+/* .StripeElement {
   margin: 15px auto;
   padding: 10px 12px;
   color: #32325d;
@@ -184,7 +184,7 @@ a:active {
 
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
-}
+} */
 
 .btn-pay {
   display: block;

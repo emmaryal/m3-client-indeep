@@ -33,18 +33,18 @@ class Private extends Component {
       <div>
         {this.state.userObj.name === "admin" ? (
           <Link to="/records/add">
-            <button className="navbar-button">Add Record</button>{" "}
+            <button className="btn-2 mb-2">Add Record</button>{" "}
           </Link>
         ) : (
           <div>
             <h4>Welcome {this.props.user && this.props.user.email}</h4>
-          </div>
-        )}
+         
 
         <div>
           <MyFavourites currentUser={this.props.user._id} />
         </div>
-
+        </div>
+        )}
         <br />
 
         <RecordListPage />
