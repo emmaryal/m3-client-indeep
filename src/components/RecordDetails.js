@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { withAuth } from './../context/auth-context';
 
 const stripePromise = loadStripe(
   "pk_test_51HykoTFq2ycg13FNvuYLaF0ahXb5GLoqRe2KTQSQsWbCRzdSPw9NBIIUclD8i3EvDSG3e7kqU5IwdBSI8bXhXeg800d9VLE2v4"
@@ -31,6 +32,7 @@ class RecordDetails extends Component {
     price: 0,
     defaultImg: "./../images/recordPlaceholderImage.jpeg",
     favoritedBy: [],
+    favouritedByIds: [],
     count: 0,
     currentUser: null,
     isFavourite: false,
@@ -84,6 +86,10 @@ class RecordDetails extends Component {
           favoritedBy,
         } = data;
 
+        const userId = this.props.user._id;
+        const favouritedByIds = favoritedBy ? favoritedBy.map((f)=> f._id) : [];
+        const isFavourite = favoritedBy && favouritedByIds.includes(userId);
+
         this.setState({
           id,
           listingId,
@@ -99,14 +105,16 @@ class RecordDetails extends Component {
           comments,
           price,
           favoritedBy,
+          isFavourite,
+          favouritedByIds
         });
       })
 
       .catch((err) => console.log(err));
   };
 
-  addFavourite = () => {
-    this.setState({ isFavourite: true });
+
+  toggleFavourite = () => {
     const userId = this.state.currentUser;
     const { id } = this.props.match.params;
     console.log("favouritedby:", this.state.favoritedBy);
@@ -114,19 +122,25 @@ class RecordDetails extends Component {
     console.log("record id:", id);
     console.log("userid:", userId);
 
-    (this.state.favoritedBy)&&(this.state.favoritedBy.includes(userId)) 
-    ? 
-    (
-      recordService.updateFave(userId, id)
-        .then()
-        .catch((error) => console.log(error))
-    )    
-     : 
-     ( recordService
-        .removeFave(id, userId)
-        .then()
-        .catch((error) => console.log(error))
-      )
+
+    const isUsersFavourite = this.state.favoritedBy && this.state.favouritedByIds.includes(userId);
+
+
+    if (isUsersFavourite) {
+      recordService
+       .removeFave(id, userId)
+       .then(() => {
+        this.setState({ isFavourite: false });
+       })
+       .catch((error) => console.log(error))
+      } 
+      else {        
+        recordService.updateFave(userId, id)
+          .then(() => {
+            this.setState({ isFavourite: true });
+          })
+          .catch((error) => console.log(error))  
+      }
     
   };
 
@@ -190,12 +204,20 @@ src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%
             />
             <br />
 
-            {(this.state.favoritedBy!== null)&&(this.state.favoritedBy.includes(this.state.currentUser)) ?(
-              <button onClick={this.addFavourite}>
+{/*             {(this.state.favoritedBy!== null)&&(this.state.favoritedBy.includes(this.state.currentUser)) ?(
+              <button onClick={this.toggleFavourite}>
                 Remove from favourites
               </button>
             ) : (
-              <button onClick={this.addFavourite}>Add to favourites</button>
+              <button onClick={this.toggleFavourite}>Add to favourites</button>
+            )} */}
+
+            {(this.state.isFavourite) ?(
+              <button onClick={this.toggleFavourite}>
+                Remove from favourites
+              </button>
+            ) : (
+              <button onClick={this.toggleFavourite}>Add to favourites</button>
             )}
 
           </Col>
@@ -222,4 +244,4 @@ src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%
   }
 }
 
-export default RecordDetails;
+export default withAuth(RecordDetails);
