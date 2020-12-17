@@ -64,8 +64,6 @@ class RecordListPage extends Component {
     );
     const randomRecord = this.state.listOfRecords[randomIndex];
     this.setState({ listOfRecords: randomRecord });
-    console.log(randomIndex);
-    console.log(randomRecord);
     this.filterRecords(randomRecord.title);
 
     return;
@@ -240,22 +238,14 @@ class RecordListPage extends Component {
                          {record.title}
                         </h6>
                       </Link>
-                        {/* <ul  className="cardList" >
-                          <li>Artist : {record.artist} </li>
-                          <li>Label : {record.label} </li>
-                          <li>Price : {record.price}€ </li>
-                        </ul> */}
+                      
 
                       <p><b>Artist: </b> {record.artist} </p>
                       <p><b>Label: </b>{record.label}</p>
                       <p><b>Price: </b>{record.price}€</p> 
                    </Col>
                     <Col sm={6}>
-                      {/* <img
-                        style={{ width: "100px", padding: "10px" }}
-                      src={record.img}
-                         alt="record"
-                      /> */}
+                      
                       <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"

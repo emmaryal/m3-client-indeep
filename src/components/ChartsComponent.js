@@ -8,7 +8,7 @@ class ChartsComponent extends Component {
 
   componentDidMount() {
     this.getCurrentUser();
-    this.getNewReleases()
+    this.getNewReleases();
   }
 
   getCurrentUser = () => {
@@ -23,53 +23,33 @@ class ChartsComponent extends Component {
 
   getNewReleases = () => {
     const recordsCopy = [...this.props.newReleases];
-    console.log(this.props)
-    const newReleases = recordsCopy.slice(Math.max(recordsCopy.length-10, 0));
+    const newReleases = recordsCopy.slice(Math.max(recordsCopy.length - 10, 0));
 
     this.setState({ newReleases: newReleases });
-    
   };
-  /*   filterRecords = (input) => {
-    const finder = this.state.listOfRecords.filter(
-      (el) =>
-        el.title
-          .toLowerCase()
-          .includes(
-            input.toLowerCase()
-          ) 
-    );
-
-    this.setState({ listOfRecords: finder });
-  };
-
-  handleSortByPopularity = () => {
-    const topTen = this.state.listOfRecords.sort((x, y) => {
-      return x.popularity - y.popularity;
-    });
-    this.setState({ listOfRecords: topTen });
-  }; */
 
   render() {
     const { newReleases } = this.props;
 
     return (
       <div className="charts-div">
-        {/*  {this.props.listOfRecords.map((recordObj) => {
-            return <p key={recordObj._id}>{recordObj.title}</p>;
-          })} */}
-          <p className="chart-text-title">new releases</p>
-        {this.state.newReleases?this.state.newReleases.map((record) => {
-          return (
-            <div key={record._id}className="chart-list" >
-              <Link to={`/records/${record._id}`}>
-                <p className="chart-text">{record.title}</p>
-              </Link>
-              <p>artist: {record.artist} </p>
-              <p>label:{record.label} </p>
-              <p>Price: {record.price}€</p>
-            </div>
-          );
-        }):<h1>loading</h1>}
+        <p className="chart-text-title">new releases</p>
+        {this.state.newReleases ? (
+          this.state.newReleases.map((record) => {
+            return (
+              <div key={record._id} className="chart-list">
+                <Link to={`/records/${record._id}`}>
+                  <p className="chart-text">{record.title}</p>
+                </Link>
+                <p>artist: {record.artist} </p>
+                <p>label:{record.label} </p>
+                <p>Price: {record.price}€</p>
+              </div>
+            );
+          })
+        ) : (
+          <h1>loading</h1>
+        )}
       </div>
     );
   }

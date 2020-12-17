@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
-
-import { Home } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import RecordListPage from "./RecordListPage";
 import authService from "../lib/auth-service";
-import recordService from "../lib/records-service";
 import MyFavourites from "../components/MyFavourites";
 
 class Private extends Component {
@@ -20,10 +17,8 @@ class Private extends Component {
       .me()
       .then((data) => {
         const { _id } = data;
-        console.log("data from promise:", data);
         this.setState({ currentUser: _id });
-        this.setState({userObj: data});
-        console.log("this.state:", this.state);
+        this.setState({ userObj: data });
       })
       .catch((err) => console.log(err));
   };
@@ -37,13 +32,12 @@ class Private extends Component {
           </Link>
         ) : (
           <div>
-            <h4>Welcome {this.props.user && this.props.user.email}</h4>
-         
-
-        <div>
-          <MyFavourites currentUser={this.props.user._id} />
-        </div>
-        </div>
+           <h4>{/*Welcome {this.props.user && this.props.user.email*/}</h4>
+<br /> 
+            <div>
+              <MyFavourites currentUser={this.props.user._id} />
+            </div>
+          </div>
         )}
         <br />
 
