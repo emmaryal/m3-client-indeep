@@ -1,6 +1,6 @@
 import React from "react";
 import { ElementsConsumer, CardElement } from "@stripe/react-stripe-js";
-
+import {Link} from "react-router-dom"
 import CardSection from "./CardSection";
 
 class CheckoutForm extends React.Component {
@@ -30,9 +30,10 @@ class CheckoutForm extends React.Component {
         </div>
         <form onSubmit={this.handleSubmit} style={{"width": "200px"}}>
           <CardSection />
-          <button disabled={!this.props.stripe} className="btn-pay">
+          <Link to={"/"}><button className="btn-pay">
             Buy Now
           </button>
+          </Link>
         </form>
       </div>
     );

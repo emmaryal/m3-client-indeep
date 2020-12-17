@@ -150,11 +150,12 @@ class RecordDetails extends Component {
 
 
 handleClick = async (event) => {
-    // Get Stripe.js instance
+    // Get Stripe.js instanceç
+    
     const stripe = await stripePromise;
-
+console.log('stripe', stripe)
     // Call your backend to create the Checkout Session
-    const response = await fetch('/create-checkout-session', { method: 'POST' });
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/create-checkout-session`, { method: 'POST' });
 
     const session = await response.json();
 
@@ -228,7 +229,7 @@ handleClick = async (event) => {
                     />
                   </Elements>
                 </div>
-                 {/* <div>
+                {/*  <div>
                  <button role="link" onClick={this.handleClick}>Checkout</button>
                 </div> */}
               </div>
