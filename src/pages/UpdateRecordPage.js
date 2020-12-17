@@ -28,11 +28,9 @@ class UpdateRecordPage extends Component {
 
   getSingleRecord = () => {
     const { id } = this.props.match.params;
-    console.log("id:", id);
     recordService
       .getOne(id)
       .then((data) => {
-        console.log(data);
 
         const {
           listingId,
@@ -217,11 +215,10 @@ class UpdateRecordPage extends Component {
               />
             </Form.Group>
           </Form.Row>
-          {/*           <Button variant="secondary" onClick={this.handleSubmit}>Update Record</Button>
-           */}{" "}
-          <input variant="secondary" type="submit" value="Update Record" />
+          
+          <input className = "btn-2 mb-2" variant="secondary" type="submit" value="Update Record" />
           <br />
-          <Button variant="secondary" onClick={this.deleteRecord}>
+          <Button className="btn-2 mb-2"variant="secondary" onClick={this.deleteRecord}>
             Delete Record
           </Button>
         </Form>

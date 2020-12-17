@@ -12,54 +12,66 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         {this.props.isLoggedIn ? (
-          <Link to={"/private"} id="home-btn">
+          <Link to={"/"} id="home-btn">
             <img
               className="rotate"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU"
-            alt="record"/>
+              alt="record"
+            />
           </Link>
         ) : (
           <Link to={"/"} id="home-btn">
-            <img className="rotate" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU" alt="record" />
-            </Link>
+            <img
+              className="rotate"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU"
+              alt="record"
+            />
+          </Link>
         )}
         <h1 className="indeepTitle">Indeep Records</h1>
 
-
-
-        
         <div className="rightnav">
           {this.props.isLoggedIn ? (
             <>
-              {/* <p>logged in as: {this.props.user && this.props.user.email}</p> */}
               <p>
                 {this.props.user.profilePic ? (
-                  <img style={{margin: "20px"}}
-                    src={this.props.user.profilePic}
-                    alt="profile pic"
-                    width="50"
-                    height="60"
-                  />
+                  <Link to={"/private"} id="profile-btn">
+                    <img
+                      style={{ margin: "20px" }}
+                      src={this.props.user.profilePic}
+                      alt="profile pic"
+                      width="50"
+                      height="50px"
+                    />
+                    )
+                  </Link>
                 ) : (
-                  <img style={{margin: "20px"}}
-                    src={this.state.profilePlaceholder}
-                    alt="profile pic"
-                    width="50"
-                    height="60"
-                  />
+                  <Link to={"/private"} id="profile-btn">
+                    <img
+                      style={{ margin: "20px" }}
+                      src={this.state.profilePlaceholder}
+                      alt="profile pic"
+                      width="60px"
+                      height="60px"
+                    />
+                  </Link>
                 )}
               </p>
 
-              <button onClick={this.props.logout}>Logout</button>
+              <button className="btn-2 mb2" onClick={this.props.logout}>
+                Logout
+              </button>
             </>
           ) : (
             <>
               <Link to="/login">
-                <button className="navbar-button">Login</button>{/* {" "} */}
+                <button className="btn-2 mb2">Login</button>
+                {/* {" "} */}
               </Link>
               <br />
               <Link to="/signup">
-                <button className="navbar-button">Sign Up</button>{/* {" "} */}
+                <button className="btn-2 mb2">Sign Up</button>
+                {/* {" "} */}
               </Link>
             </>
           )}

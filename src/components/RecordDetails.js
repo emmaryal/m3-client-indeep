@@ -5,13 +5,8 @@ import authService from "./../lib/auth-service";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import CheckoutForm from "./CheckoutForm";
-
-const stripePromise = loadStripe("pk_test_51HykoTFq2ycg13FNvuYLaF0ahXb5GLoqRe2KTQSQsWbCRzdSPw9NBIIUclD8i3EvDSG3e7kqU5IwdBSI8bXhXeg800d9VLE2v4");
-
-
+import { withAuth } from "./../context/auth-context";
+import Button from "react-bootstrap/Button";
 
 class RecordDetails extends Component {
   state = {
@@ -31,34 +26,26 @@ class RecordDetails extends Component {
     price: 0,
     defaultImg: "./../images/recordPlaceholderImage.jpeg",
     favoritedBy: [],
+    favouritedByIds: [],
     count: 0,
     currentUser: null,
     isFavourite: false,
-  
   };
-
 
   componentDidMount() {
     this.getSingleRecord();
     this.getCurrentSessionUser();
-   
   }
 
   getCurrentSessionUser = () => {
     authService.me().then((data) => {
       const { _id } = data;
-      console.log("id of current session user", _id);
-      console.log("data from promise:", data);
       this.setState({ currentUser: _id });
-      console.log("this.state:", this.state);
       recordService
         .getOneUser(_id)
         .then((user) => {
-          console.log("currentUser from DB: ", user);
           const { _id } = user;
           this.setState({ currentUser: _id });
-          console.log("this.state.currentUser:", this.state.currentUser);
-          console.log("userId:", _id);
         })
         .catch((err) => console.log(err));
     });
@@ -66,12 +53,10 @@ class RecordDetails extends Component {
 
   getSingleRecord = () => {
     const { id } = this.props.match.params;
-   
+
     recordService
       .getOne(id)
       .then((data) => {
-       
-       
         const {
           id,
           listingId,
@@ -89,6 +74,12 @@ class RecordDetails extends Component {
           favoritedBy,
         } = data;
 
+        const userId = this.props.user._id;
+        const favouritedByIds = favoritedBy
+          ? favoritedBy.map((f) => f._id)
+          : [];
+        const isFavourite = favoritedBy && favouritedByIds.includes(userId);
+
         this.setState({
           id,
           listingId,
@@ -104,106 +95,118 @@ class RecordDetails extends Component {
           comments,
           price,
           favoritedBy,
+          isFavourite,
+          favouritedByIds,
         });
       })
 
       .catch((err) => console.log(err));
   };
 
-
-  
-
-
-
-
-addFavourite = () => {
-  
-    this.setState({ isFavourite: !this.state.isFavourite });
+  toggleFavourite = () => {
     const userId = this.state.currentUser;
     const { id } = this.props.match.params;
-    const recordId = id;
-    console.log("isFavourite:", this.state.isFavourite);
-    console.log("record id:", id);
-    console.log("userid:", userId);
 
-    if (this.state.isFavourite === false) {
+
+    const isUsersFavourite =
+      this.state.favoritedBy && this.state.favouritedByIds.includes(userId);
+
+    if (isUsersFavourite) {
       recordService
-        .updateFave(userId, recordId)
-        .then()
+        .removeFave(id, userId)
+        .then(() => {
+          this.setState({ isFavourite: false });
+        })
         .catch((error) => console.log(error));
     } else {
       recordService
-        .removeFave(recordId, userId)
-        .then()
+        .updateFave(userId, id)
+        .then(() => {
+          this.setState({ isFavourite: true });
+        })
         .catch((error) => console.log(error));
     }
   };
 
-  setPopularity = (id) => {
-    //get
-  };
-
- 
   render() {
-    
     return (
-      <Container className="card">
-        <Row>
-          <Col className="details-labels" lg={6}>
-            <h3>{this.state.title}</h3>
-            <h4>{this.state.artist}</h4>
-            <p className="details-labels">label: {this.state.label}</p>
-            <p>format: {this.state.format}</p>
-            <p>label: {this.state.label}</p>
-            <p>media condition: {this.state.mediaCondition}</p>
-            <p>sleeve condition: {this.state.sleeveCondition}</p>
-            <p>weight: {this.state.weight}g</p>
-            <p>catalogue no.: {this.state.catno}</p>
-            <p>comments: {this.state.comments}</p>
-            <div>price: {this.state.price}€</div>
+      <Container className="card ">
+        <Row className="forms-input">
+          <Col className="details-labels" md={8}>
+            <h3>
+              <b>{this.state.title}</b>
+            </h3>
             <br />
-            <Link to={"/"}>see all</Link>
+            <h4>
+              <b>artist: </b>
+              {this.state.artist}
+            </h4>
+            <br />
+            <p>
+              <b>label: </b> {this.state.label}
+            </p>
+            <p>
+              <b>format: </b> {this.state.format}
+            </p>
+            <p>
+              <b>label: </b>
+              {this.state.label}
+            </p>
+            <p>
+              <b>media condition: </b>
+              {this.state.mediaCondition}
+            </p>
+            <p>
+              <b>sleeve condition: </b>
+              {this.state.sleeveCondition}
+            </p>
+            <p>
+              <b>weight: </b>
+              {this.state.weight}g
+            </p>
+            <p>
+              <b>catalogue no.: </b>
+              {this.state.catno}
+            </p>
+            <p>
+              <b>comments: </b>
+              {this.state.comments}
+            </p>
+            <div>
+              <b>price: {this.state.price}€</b>
+            </div>
+            <br />
+            <Link to={"/private"}>see all</Link>
           </Col>
-          <Col md={3}>
+          <Col md={4}>
             <img
               style={{ width: "200px" }}
               src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
               alt="record"
             />
-            <img
-              style={{ width: "200px" }}
-              src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
-              alt="record"
-            />
-            <br />
 
             {this.state.isFavourite ? (
-              <button onClick={this.addFavourite}>
+             
+              <Button
+         className="btn-2 mb-2"
+          variant="outline secondary"
+          onClick={this.toggleFavourite}
+        >
                 Remove from favourites
-              </button>
+                </Button>
             ) : (
-              <button onClick={this.addFavourite}>Add to favourites</button>
+              <Button
+         className="btn-2 mb-2"
+          variant="outline secondary"
+          onClick={this.toggleFavourite}
+        >Add to favourites</Button>
             )}
           </Col>
-          <Col sm={3}>
-          <div className="App">
-      <div className="product">
-        
-        <div>
-          <Elements stripe={stripePromise}>
-            <CheckoutForm recordTitle={this.state.title} recordPrice={this.state.price}/>
-          </Elements>
-        </div>
-      </div>
-    </div>
-
-      
-    
-          </Col>
+          
         </Row>
       </Container>
     );
   }
 }
 
-export default RecordDetails;
+export default withAuth(RecordDetails);

@@ -1,4 +1,4 @@
-//import { EmailTwoTone } from "@material-ui/icons";
+//import { EmailTwoTone} from "@material-ui/icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from './../context/auth-context';
@@ -44,7 +44,7 @@ class Signup extends Component {
     return (
       <div>
         <h1>Sign Up</h1>
-
+        
         <Form onSubmit={this.handleFormSubmit}>
         <Form.Group controlId="exampleForm.ControlInput1">
           <label>Email:</label>
