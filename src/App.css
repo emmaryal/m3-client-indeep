@@ -82,13 +82,13 @@ justify-content: flex-end;
   margin: 20px 0;
  
   padding: 5px;
-  margin: 25px;
+  /*margin: 25px;*/
 }
 
 p {
   margin:0;
   padding:0;
-  line-height: 20px;
+  line-height: 15px;
 }
 
 .chart-text-title{
@@ -206,6 +206,7 @@ a:active {
   display:flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-bottom: 50px ;
   
 }
 .record-list{
@@ -213,7 +214,7 @@ a:active {
   flex-direction: column;
   align-items: center;
 
-  margin: 15px;
+  margin: 5px;
 
 }
 
@@ -223,7 +224,7 @@ a:active {
   justify-content: space-around;
   flex-direction: row;
   background-color: rgba(92, 123, 123, 0.867);
-    margin-top: 10rem;
+    margin-top: 50rem;
     padding: 1rem;
     
     position: fixed;
@@ -233,6 +234,9 @@ a:active {
   
 }
 
+body {
+  margin-bottom: 50px;
+}
 .footer>img {
 
   height: 50px;

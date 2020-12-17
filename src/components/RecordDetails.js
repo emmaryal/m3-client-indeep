@@ -191,7 +191,12 @@ console.log('stripe', stripe)
             <p><b>comments: </b>{this.state.comments}</p>
             <div><b>price: {this.state.price}€</b></div>
             <br />
-            <Link to={"/"}>see all</Link>
+          <Link to={"/private"}>see all</Link>
+
+            
+      
+             
+
           </Col>
           <Col md={3}>
             <img

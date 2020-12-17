@@ -12,7 +12,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         {this.props.isLoggedIn ? (
-          <Link to={"/private"} id="home-btn">
+          <Link to={"/"} id="home-btn">
             <img
               className="rotate"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUxokMH9aY_2qzJ6F6M-rBq7oL56zwA2uWw&usqp=CAU"
@@ -33,20 +33,26 @@ class Navbar extends Component {
             <>
               {/* <p>logged in as: {this.props.user && this.props.user.email}</p> */}
               <p>
+              
                 {this.props.user.profilePic ? (
+                  <Link to={"/private"} id="profile-btn">
                   <img style={{margin: "20px"}}
                     src={this.props.user.profilePic}
                     alt="profile pic"
                     width="50"
                     height="60"
-                  />
-                ) : (
+                  />)
+                  </Link>
+                ): (
+                  <Link to={"/private"} id="profile-btn">
                   <img style={{margin: "20px"}}
                     src={this.state.profilePlaceholder}
                     alt="profile pic"
                     width="50"
                     height="60"
+                    
                   />
+                  </Link>
                 )}
               </p>
 

@@ -179,7 +179,7 @@ class AddRecordPage extends Component {
           </Form.Group>
         </Form.Row>
 
-          <input variant = "secondary" type="submit" value="Add Record" />
+          <input className = "btn-2 mb-2" variant = "secondary" type="submit" value="Add Record" />
         </Form>
       </Container>
     );

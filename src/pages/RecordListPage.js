@@ -224,7 +224,7 @@ class RecordListPage extends Component {
           variant="outline secondary"
           onClick={this.handleSortByDesPrice}
         >
-          Sort By Price ↓
+          Sort By Price↓
         </Button>
         
         <Row>
@@ -257,6 +257,16 @@ class RecordListPage extends Component {
                          alt="record"
                       /> */}
                       <img
+                        style={{ width: "100px", padding: "10px" }}
+                        src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
+                        alt="record"
+                      />
+                        <img
+                        style={{ width: "100px", padding: "10px" }}
+                        src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
+                        alt="record"
+                      />
+                        <img
                         style={{ width: "100px", padding: "10px" }}
                         src="https://crossedcombs.typepad.com/.a/6a00e00980a6f38833017c37ab6210970b-pi"
                         alt="record"
