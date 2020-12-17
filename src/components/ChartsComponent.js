@@ -57,7 +57,7 @@ class ChartsComponent extends Component {
         {/*  {this.props.listOfRecords.map((recordObj) => {
             return <p key={recordObj._id}>{recordObj.title}</p>;
           })} */}
-
+          <p className="chart-text-title">new releases</p>
         {this.state.newReleases?this.state.newReleases.map((record) => {
           return (
             <div key={record._id}className="chart-list" >

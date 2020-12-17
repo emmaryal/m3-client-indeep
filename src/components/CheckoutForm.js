@@ -28,7 +28,7 @@ class CheckoutForm extends React.Component {
           <h3 className="product-title">{this.props.recordTitle}</h3>
           <h4 className="product-price">{this.props.recordPrice}€</h4>
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} style={{"width": "200px"}}>
           <CardSection />
           <button disabled={!this.props.stripe} className="btn-pay">
             Buy Now

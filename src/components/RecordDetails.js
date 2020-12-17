@@ -198,11 +198,7 @@ handleClick = async (event) => {
               src="https://www.saga.co.uk/contentlibrary/saga/publishing/verticals/money/personal-finance/making-money/selling-vinyl-shutterstock-234267241.jpg"
               alt="record"
             />
-            <img
-              style={{ width: "200px" }}
-src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FNevermind&psig=AOvVaw0FBbQMebTCQZj_Wc7MoN9k&ust=1608248922866000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDa65_Y0-0CFQAAAAAdAAAAABAD"              alt="record"
-            />
-            <br />
+          
 
 {/*             {(this.state.favoritedBy!== null)&&(this.state.favoritedBy.includes(this.state.currentUser)) ?(
               <button onClick={this.toggleFavourite}>
@@ -232,9 +228,9 @@ src= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%
                     />
                   </Elements>
                 </div>
-                <div>
-                  <button role="link" onClick={this.handleClick}>Checkout</button>
-                </div>
+                 {/* <div>
+                 <button role="link" onClick={this.handleClick}>Checkout</button>
+                </div> */}
               </div>
             </div>
           </Col>

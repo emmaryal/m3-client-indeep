@@ -9,7 +9,7 @@ import recordService from "../lib/records-service";
 import MyFavourites from "../components/MyFavourites";
 
 class Private extends Component {
-  state = { currentUser: null };
+  state = { currentUser: null, userObj: {} };
 
   componentDidMount() {
     this.getCurrentUser();
@@ -21,7 +21,8 @@ class Private extends Component {
       .then((data) => {
         const { _id } = data;
         console.log("data from promise:", data);
-        this.setState({ currentUser: _id } /* , {userId: _id} */);
+        this.setState({ currentUser: _id });
+        this.setState({userObj: data});
         console.log("this.state:", this.state);
       })
       .catch((err) => console.log(err));
@@ -30,7 +31,7 @@ class Private extends Component {
   render() {
     return (
       <div>
-        {this.state.currentUser === "admin" ? (
+        {this.state.userObj.name === "admin" ? (
           <Link to="/records/add">
             <button className="navbar-button">Add Record</button>{" "}
           </Link>

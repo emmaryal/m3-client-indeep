@@ -91,11 +91,18 @@ p {
   line-height: 10px;
 }
 
+.chart-text-title{
+  font-family: 'Teko', sans-serif;
+  font-size: 30px;
+  align-items: center;
+}
+
 .chart-text{
   font-family: 'Teko', sans-serif;
   font-size: 24px;
-  align-items: center;
+  
 }
+
 .card {
   margin:0px;
 }
@@ -115,6 +122,7 @@ h1, p {
   border-width: 5px;
   border-bottom: black;
   margin-bottom: 5px;
+  margin-top:15px;
   padding: 10px;
  /*  height: 200px;
   width: 200px; */
@@ -127,6 +135,7 @@ h1, p {
 
 .charts-div {
   background-color: rgb(89, 196, 196);
+  padding: 10px;
   margin: 0 0 0 20px;
 }
 

@@ -17,7 +17,7 @@ const CARD_ELEMENT_OPTIONS = {
       ":focus": {
         color: "#303238"
       }
-    }
+    }, width:"400px"
   }
 };
 
@@ -25,7 +25,7 @@ function CardSection() {
   return (
     <label>
       Card details
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
+      <CardElement options={CARD_ELEMENT_OPTIONS} style={{"width": "200px"}}/>
     </label>
   );
 }

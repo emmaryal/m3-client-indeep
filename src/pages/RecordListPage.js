@@ -217,14 +217,14 @@ class RecordListPage extends Component {
           variant="outline secondary"
           onClick={this.handleSortByAscPrice}
         >
-          Sort By Price ☟
+          Sort By Price ↑
         </Button>
         <Button
           className="btn-2 mb-2"
           variant="outline secondary"
           onClick={this.handleSortByDesPrice}
         >
-          Sort By Price ☟
+          Sort By Price ↓
         </Button>
         
         <Row>
@@ -250,7 +250,7 @@ class RecordListPage extends Component {
                       <p><b>Label: </b>{record.label}</p>
                       <p><b>Price: </b>{record.price}€</p> 
                    </Col>
-                    <Col sm={4}>
+                    <Col sm={6}>
                       {/* <img
                         style={{ width: "100px", padding: "10px" }}
                       src={record.img}
@@ -274,7 +274,7 @@ class RecordListPage extends Component {
             </div>
        </Col>
           <Col  sm={4} >
-            <p className="chart-text">new releases</p>
+          
             {this.state.listOfRecords[0] ? (
               <ChartsComponent newReleases={this.state.listOfRecords} />
             ) : null}
