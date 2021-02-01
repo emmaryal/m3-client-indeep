@@ -178,8 +178,8 @@ a:active {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  background-color: rgba(92, 123, 123, 0.867);
-  margin-top: 40rem;
+  background-color: rgba(92, 123, 123);
+  /* margin-top: 40rem; */
   padding: 1rem;
 
   position: fixed;
