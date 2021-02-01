@@ -104,6 +104,7 @@ p {
 .fave-card {
   display: inline;
   width: 25%;
+  line-height: 20px;
 }
 .details-labels {
   font-weight: 400;
@@ -195,7 +196,7 @@ body {
 .footer > img {
   height: 30px;
 }
-
+/*
 .btn-2 {
   letter-spacing: 0;
 }
@@ -203,7 +204,7 @@ body {
 .btn-2:hover,
 .btn-2:active {
   letter-spacing: 5px;
-}
+}*/
 
 .btn-2:after,
 .btn-2:before {
@@ -214,7 +215,7 @@ body {
   display: block;
   margin: 0 auto;
   position: relative;
-  transition: all 280ms ease-in-out;
+  /* transition: all 280ms ease-in-out; */
   width: 0;
 }
 
@@ -222,7 +223,7 @@ body {
 .btn-2:hover:before {
   backface-visibility: hidden;
   border-color: #fff;
-  transition: width 350ms ease-in-out;
+  /* transition: width 350ms ease-in-out; */
   width: 70%;
 }
 
@@ -232,3 +233,7 @@ body {
   width: 70%;
 }
 
+.error {
+  color: red
+  
+}
